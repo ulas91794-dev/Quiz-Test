@@ -2,8 +2,8 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
-    <title>Milyoner Mobile Native v1.0</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Milyoner Mobile Pro v6.0</title>
     <style>
         :root {
             --bg-main: #020617;
@@ -14,15 +14,13 @@
             --wrong: #ef4444;
             --gold: #eab308;
             --joker: #1e293b;
-            --neon: #06b6d4;
-            --purple: #a855f7;
         }
 
         * { 
             box-sizing: border-box; 
             margin: 0; 
             padding: 0; 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: sans-serif;
             user-select: none;
             -webkit-user-select: none;
             -webkit-tap-highlight-color: transparent; 
@@ -35,293 +33,210 @@
             display: flex; 
             justify-content: center; 
             align-items: center; 
-            padding: 8px;
-            background-image: radial-gradient(circle at 50% 50%, #1e1b4b 0%, #020617 100%);
-            overflow: hidden;
+            padding: 10px;
         }
 
-        .app-wrapper { 
+        .app-container { 
             background-color: var(--bg-card); 
             width: 100%; 
-            max-width: 480px; 
-            height: 96vh;
-            border-radius: 20px; 
+            max-width: 450px; 
+            border-radius: 16px; 
             padding: 15px; 
-            box-shadow: 0 0 30px rgba(6, 182, 212, 0.2); 
             border: 2px solid #1e293b; 
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            position: relative;
+            text-align: center;
         }
         
-        .header-panel { 
+        .status-panel { 
             display: flex; 
             justify-content: space-between; 
-            align-items: center; 
-            background: linear-gradient(90deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.9)); 
-            padding: 10px 14px; 
-            border-radius: 12px; 
-            border: 1px solid #334155;
-            font-size: 0.95rem;
-        }
-
-        .prize-style { font-weight: 800; color: var(--gold); }
-        .wallet-style { color: #22c55e; font-weight: 800; }
-        
-        .joker-row { 
-            display: flex; 
-            justify-content: space-around; 
-            gap: 8px; 
-            margin: 10px 0; 
-        }
-
-        .joker-circle { 
-            background-color: var(--joker); 
-            color: var(--text-main); 
-            border: 2px solid var(--text-blue); 
-            padding: 8px 12px; 
-            border-radius: 20px; 
-            font-size: 0.8rem; 
-            cursor: pointer; 
-            font-weight: bold; 
-            flex: 1;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-        }
-
-        .joker-circle:disabled { 
-            opacity: 0.2; 
-            text-decoration: line-through; 
-            border-color: #475569; 
-        }
-
-        .spiker-chat-area { 
-            background: rgba(15, 23, 42, 0.95); 
-            border: 1px solid #334155; 
             padding: 10px; 
-            border-radius: 12px; 
-            font-size: 0.9rem; 
-            min-height: 70px; 
-            text-align: left;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
-            overflow-y: auto;
+            background: #0f172a; 
+            border-radius: 8px; 
+            border: 1px solid #334155;
+            margin-bottom: 10px;
         }
 
-        .role-tag { 
-            font-weight: 800; 
-            font-size: 0.7rem; 
-            text-transform: uppercase; 
-            letter-spacing: 1px; 
-            margin-bottom: 2px; 
-            display: inline-block; 
-            padding: 1px 5px;
-            border-radius: 3px;
-        }
+        .joker-box { display: flex; gap: 8px; margin-bottom: 10px; }
+        .joker-btn { flex: 1; background: var(--joker); color: white; border: 2px solid var(--text-blue); padding: 8px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        .joker-btn:disabled { opacity: 0.3; }
 
-        .tag-host { color: var(--gold); border-left: 3px solid var(--gold); }
-        .tag-audience { color: var(--purple); border-left: 3px solid var(--purple); }
-        #chat-dialogue { color: #e2e8f0; font-style: italic; line-height: 1.3; }
+        .chat-display { background: #090d16; border: 1px solid #334155; padding: 10px; border-radius: 8px; text-align: left; min-height: 60px; margin-bottom: 10px; }
+        .chat-tag { font-weight: bold; font-size: 0.75rem; color: var(--gold); text-transform: uppercase; }
+        #chat-dialogue { font-style: italic; font-size: 0.9rem; margin-top: 2px; }
 
-        .question-box { 
-            font-size: 1.1rem; 
-            font-weight: 700; 
-            line-height: 1.4; 
-            margin: 10px 0; 
-            min-height: 55px; 
-            text-align: left; 
-            color: #f1f5f9;
-            padding: 5px;
-        }
-
-        .matrix-options { 
-            display: grid; 
-            grid-template-columns: 1fr; 
-            gap: 8px; 
-            flex-grow: 1;
-            justify-content: center;
-            align-content: center;
-        }
+        .q-text { font-size: 1.1rem; font-weight: bold; text-align: left; margin: 15px 0; min-height: 50px; }
+        .options-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
         
-        .btn-option { 
-            background-color: #1e293b; 
-            color: var(--text-main); 
-            border: 2px solid #334155; 
-            padding: 12px 16px; 
-            border-radius: 12px; 
-            font-size: 0.9rem; 
-            font-weight: 600; 
-            cursor: pointer; 
-            text-align: left; 
-            transition: background 0.1s;
-        }
+        .opt-btn { background: #1e293b; color: white; border: 2px solid #334155; padding: 12px; border-radius: 10px; font-size: 0.95rem; text-align: left; font-weight: 600; cursor: pointer; }
+        .opt-btn.correct { background: var(--correct) !important; border-color: #059669 !important; }
+        .opt-btn.wrong { background: var(--wrong) !important; border-color: #dc2626 !important; }
+        .opt-btn.hidden { opacity: 0.05; pointer-events: none; }
 
-        .btn-option.correct { 
-            background-color: var(--correct) !important; 
-            border-color: #059669 !important; 
-            color: white !important; 
-            box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
-        }
+        .main-btn { background: linear-gradient(135deg, var(--gold), #ca8a04); color: black; border: none; padding: 12px; border-radius: 10px; font-size: 1rem; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; }
 
-        .btn-option.wrong { 
-            background-color: var(--wrong) !important; 
-            border-color: #dc2626 !important; 
-            color: white !important; 
-            box-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
-        }
-
-        .btn-option.hidden { opacity: 0.02; pointer-events: none; }
-
-        .btn-action { 
-            background: linear-gradient(135deg, var(--gold), #ca8a04); 
-            color: #000; 
-            border: none; 
-            padding: 14px; 
-            border-radius: 12px; 
-            font-size: 1rem; 
-            font-weight: 800; 
-            cursor: pointer; 
-            width: 100%; 
-            margin-top: 10px;
-            text-transform: uppercase;
-        }
-
-        .view-layer { display: none; height: 100%; flex-direction: column; justify-content: space-between; }
-        .active-layer { display: flex; animation: viewFade 0.25s ease-in-out; }
-
-        @keyframes viewFade { from { opacity: 0; } to { opacity: 1; } }
-
-        .lobby-panel { background: rgba(255,255,255,0.02); border: 2px solid #1e293b; border-radius: 12px; padding: 12px; margin-bottom: 10px; text-align: left; }
-        .pass-card { background: linear-gradient(135deg, #1e1b4b, #311042); border: 2px solid var(--purple); border-radius: 12px; padding: 12px; margin-bottom: 15px; text-align: left; }
-        .bar-outer { background: #0f172a; border-radius: 50px; height: 10px; margin-top: 6px; overflow: hidden; border: 1px solid #4338ca; }
-        .bar-inner { background: linear-gradient(90deg, var(--purple), var(--text-blue)); height: 100%; width: 0%; }
-
-        .shop-scroll { display: flex; flex-direction: column; gap: 8px; max-height: 160px; overflow-y: auto; margin: 10px 0; padding-right: 4px; }
-        .shop-row { background: #1e293b; padding: 8px 12px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #334155; font-size: 0.85rem; }
-        
-        .sezan-panel { background: #090d16; border: 2px solid var(--neon); border-radius: 14px; padding: 10px; margin-top: 10px; text-align: left; }
-        .sezan-title { font-weight: 800; color: var(--neon); font-size: 0.85rem; margin-bottom: 5px; }
-        .sezan-text { background: #151f32; padding: 8px; border-radius: 6px; font-size: 0.8rem; border-left: 3px solid var(--neon); color: #cbd5e1; margin-bottom: 8px; }
-        .sezan-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
-        .btn-sezan { background: #223147; color: #f3f4f6; border: 1px solid #334155; padding: 6px; border-radius: 6px; font-size: 0.7rem; font-weight: 600; }
-        .btn-sezan.vip { background: linear-gradient(90deg, var(--neon), var(--purple)); color: #fff; border: none; }
-        
-        .media-frame { display: flex; justify-content: center; align-items: center; margin: 10px 0; background: #090d16; border-radius: 12px; padding: 8px; border: 2px dashed #334155; height: 140px; }
-        .media-img { max-width: 100%; height: 100%; border-radius: 8px; object-fit: contain; }
+        .view { display: none; }
+        .active-view { display: block; }
     </style>
 </head>
 <body>
 
-    <div class="app-wrapper">
+    <div class="app-container">
         
-        <div id="lobby-view" class="view-layer active-layer">
-            <h2 style="color: var(--gold); text-align:center; font-weight: 900; letter-spacing: 1px;">MILYONER LOBBY</h2>
-            
-            <div class="lobby-panel">
-                <div class="wallet-style" id="lobby-cash">Cüzdan: 0 TL</div>
-                <div style="margin-top: 4px; font-size: 0.8rem; color: #cbd5e1;">
-                    <strong>Yatırımlar:</strong> <span id="lobby-assets" style="color: var(--text-blue);">Yok</span>
-                </div>
+        <div id="view-lobby" class="view active-view">
+            <h2 style="color: var(--gold); margin-bottom: 15px;">MİLYONER MOBİL</h2>
+            <div style="background: #1e293b; padding: 15px; border-radius: 10px; text-align: left; margin-bottom: 15px;">
+                <div style="color: #22c55e; font-weight: bold;" id="lobby-money">Cüzdan: 0 TL</div>
+                <div style="font-size: 0.85rem; margin-top: 5px; color: #cbd5e1;">Cihaz Durumu: <span style="color: var(--text-blue);">Native APK Hazır</span></div>
             </div>
-
-            <div class="pass-card">
-                <div style="display: flex; justify-content: space-between; font-weight: 800; font-size: 0.8rem;">
-                    <span style="color: #c084fc;">🌟 BÜYÜK SEZON PASS</span>
-                    <span id="pass-level-tag" style="color: var(--text-blue);">Lv. 1</span>
-                </div>
-                <div class="bar-outer"><div id="pass-progress" class="bar-inner"></div></div>
-            </div>
-
-            <button class="btn-action" onclick="initiateRun()">Yarışmayı Başlat</button>
-
-            <div class="sezan-panel">
-                <div class="sezan-title">🤖 SEZAN AI — Altyapı Denetimi</div>
-                <div class="sezan-text" id="sezan-status">Native APK moduna geçiş hazırlığı tamam şef. Ses kanalları ve donanım hızlandırıcı emrinde!</div>
-                <div class="sezan-grid">
-                    <button class="btn-sezan vip" onclick="triggerSezanEngine(4)">👑 50.000 TL Teşvik Al</button>
-                    <button class="btn-sezan" onclick="triggerSezanEngine(2)">🎙️ Spiker Ses Sinyali Reset</button>
-                    <button class="btn-sezan" onclick="triggerSezanEngine(1)">🛠️ Joker Kilit Kırıcı</button>
-                    <button class="btn-sezan" onclick="triggerSezanEngine(3)">⚙️ Donanım Testi</button>
-                </div>
-            </div>
+            <button class="main-btn" onclick="startGame()">YARIŞMAYI BAŞLAT</button>
         </div>
 
-        <div id="game-view" class="view-layer">
-            <div class="header-panel">
-                <div id="question-prize" class="prize-style">Ödül: 0 TL</div>
-                <div id="game-cash" class="wallet-style">Cüzdan: 0 TL</div>
+        <div id="view-game" class="view">
+            <div class="status-panel">
+                <div id="txt-prize" style="color: var(--gold); font-weight: bold;">Soru: 0 TL</div>
+                <div id="txt-wallet" style="color: #22c55e; font-weight: bold;">0 TL</div>
             </div>
 
-            <div class="joker-row">
-                <button id="jk-50" class="joker-circle" onclick="exec5050()">%50</button>
-                <button id="jk-aud" class="joker-circle" onclick="execAudience()">Seyirci</button>
-                <button id="jk-pass" class="joker-circle" onclick="execPass()">Pas</button>
+            <div class="joker-box">
+                <button id="j-50" class="joker-btn" onclick="btn5050()">%50</button>
+                <button id="j-sey" class="joker-btn" onclick="btnSeyirci()">Seyirci</button>
             </div>
 
-            <div class="spiker-chat-area">
-                <span id="chat-actor" class="role-tag tag-host">Spiker</span>
-                <div id="chat-dialogue">"Ses kanalları aktif edildi. İlk soru yükleniyor..."</div>
+            <div class="chat-display">
+                <span class="chat-tag">Spiker Sinyali</span>
+                <div id="chat-dialogue">"Sistem stabil, dokunmatik aktif!"</div>
             </div>
 
-            <div id="main-question-text" class="question-box">Soru veritabanından çağrılıyor...</div>
-            <div class="matrix-options" id="options-grid"></div>
-            <button id="btn-next-step" class="btn-action" style="display:none;" onclick="progressNext()">Sonraki Soru</button>
+            <div id="txt-question" class="q-text">Soru buraya gelecek...</div>
+            <div class="options-grid" id="box-options"></div>
+            <button id="btn-next" class="main-btn" style="display:none;" onclick="nextStep()">Sonraki Soru</button>
         </div>
 
-        <div id="report-view" class="view-layer">
-            <h2 id="report-title" style="color: var(--gold); text-align:center; font-weight: 900;">TUR SONU</h2>
-            <p id="report-desc" style="text-align:center; font-size: 0.85rem; color: #cbd5e1; padding: 0 10px;"></p>
-            
-            <div class="media-frame">
-                <img id="media-element" class="media-img" src="" alt="Medya Katmanı">
-            </div>
-
-            <div id="report-cash-display" class="wallet-style" style="text-align:center; font-size: 1.1rem; margin: 10px 0;"></div>
-            <div class="shop-scroll" id="shop-container"></div>
-            <button class="btn-action" onclick="returnToLobby()">Lobiye Güvenli Dönüş</button>
-        </div>
     </div>
-        <script>
-        // --- GERÇEK VE FİZİKSEL OLARAK BÜYÜTÜLMÜŞ SABİT SORU VERİ TABANI ---
-        const globalQuestionDatabase = [
-            { question: "Mısır'da kurulan ilk Türk-İslam devleti aşağıdakilerden hangisidir?", options: ["Tolunoğulları", "İhşidiler", "Eyyubiler", "Memlükler"], answer: "Tolunoğulları" },
-            { question: "Güneş sistemindeki atmosfer yoğunluğu sebebiyle en sıcak gezegen hangisidir?", options: ["Venüs", "Merkür", "Mars", "Jüpiter"], answer: "Venüs" },
-            { question: "Osmanlı İmparatorluğu'nda Fatih Sultan Mehmet'in şiirlerinde kullandığı mahlas nedir?", options: ["Avni", "Muhibbi", "Adli", "İlhami"], answer: "Avni" },
-            { question: "Dünyanın en derin noktası Mariana Çukuru hangi okyanus sınırları içerisindedir?", options: ["Büyük Okyanus", "Atlas Okyanusu", "Hint Okyanusu", "Arktik Okyanusu"], answer: "Büyük Okyanus" },
-            { question: "İnternet kültüründe 'GigaChad' görsel mimine ilham veren Rus modelin gerçek adı nedir?", options: ["Ernest Khalimov", "Giga Man", "Chadwick Boseman", "Alexei Ivanov"], answer: "Ernest Khalimov" },
-            { question: "Tarihte bilinen ilk yazılı barış antlaşması olan Kadeş, hangi iki büyük antik devlet arasında imzalanmıştır?", options: ["Hitit - Mısır", "Sümer - Akad", "Asur - Babil", "Pers - Yunan"], answer: "Hitit - Mısır" },
-            { question: "Tıpta ağrı kesici aspirin ham maddesi olan salisilik asit hangi ağacın kabuğundan elde edilir?", options: ["Söğüt", "Meşe", "Çam", "Çınar"], answer: "Söğüt" },
-            { question: "Kuantum teorisinin kurucularından olan ve kendi adıyla anılan ünlü kedi deneyiyle bilinen fizikçi kimdir?", options: ["Erwin Schrödinger", "Werner Heisenberg", "Albert Einstein", "Max Planck"], answer: "Erwin Schrödinger" },
-            { question: "Edebiyat tarihinde 'Suç ve Ceza' ile 'Karamazov Kardeşler' gibi ölümsüz şaserleri bırakan Rus yazar kimdir?", options: ["Fyodor Dostoyevski", "Lev Tolstoy", "Anton Çehov", "Nikolay Gogol"], answer: "Fyodor Dostoyevski" },
-            { question: "Rönesans döneminin dâhisi olan ve 'Mona Lisa' ile 'Son Akşam Yemeği' tablolarını yapan sanatçı kimdir?", options: ["Leonardo da Vinci", "Michelangelo", "Raphael", "Donatello"], answer: "Leonardo da Vinci" },
-            { question: "Fransa devletinin resmi ve hukuki başkenti aşağıdakilerden hangisidir?", options: ["Paris", "Londra", "Roma", "Berlin"], answer: "Paris" },
-            { question: "Almanya devletinin resmi ve hukuki başkenti aşağıdakilerden hangisidir?", options: ["Berlin", "Münih", "Paris", "Viyana"], answer: "Berlin" },
-            { question: "İtalya devletinin resmi ve hukuki başkenti aşağıdakilerden hangisidir?", options: ["Roma", "Milano", "Venedik", "Madrid"], answer: "Roma" },
-            { question: "Japonya devletinin resmi ve hukuki başkenti aşağıdakilerden hangisidir?", options: ["Tokyo", "Kyoto", "Seul", "Pekin"], answer: "Tokyo" },
-            { question: "Mısır devletinin resmi ve hukuki başkenti aşağıdakilerden hangisidir?", options: ["Kahire", "Trablus", "Riyad", "Bağdat"], answer: "Kahire" },
-            { question: "Brezilya devletinin resmi ve hukuki başkenti aşağıdakilerden hangisidir?", options: ["Brasilia", "Rio de Janeiro", "Sao Paulo", "Buenos Aires"], answer: "Brasilia" },
-            { question: "İspanya devletinin resmi ve hukuki başkenti aşağıdakilerden hangisidir?", options: ["Madrid", "Barselona", "Valensiya", "Sevilla"], answer: "Madrid" },
-            { question: "Kanada devletinin resmi ve hukuki başkenti aşağıdakilerden hangisidir?", options: ["Ottawa", "Toronto", "Vancouver", "Montreal"], answer: "Ottawa" },
-            { question: "Avustralya devletinin resmi ve hukuki başkenti aşağıdakilerden hangisidir?", options: ["Canberra", "Sydney", "Melbourne", "Brisbane"], answer: "Canberra" },
-            { question: "Rusya devletinin resmi ve hukuki başkenti aşağıdakilerden hangisidir?", options: ["Moskova", "St. Petersburg", "Kazan", "Sibirya"], answer: "Moskova" },
-            { question: "Kimya biliminde 'Hidrojen' elementinin periyodik tablodaki resmi simgesi hangisidir?", options: ["H", "He", "Li", "Be"], answer: "H" },
-            { question: "Kimya biliminde 'Helyum' elementinin periyodik tablodaki resmi simgesi hangisidir?", options: ["He", "H", "Li", "Ne"], answer: "He" },
-            { question: "Kimya biliminde 'Karbon' elementinin periyodik tablodaki resmi simgesi hangisidir?", options: ["C", "Ca", "Cl", "Co"], answer: "C" },
-            { question: "Kimya biliminde 'Oksijen' elementinin periyodik tablodaki resmi simgesi hangisidir?", options: ["O", "Os", "On", "H"], answer: "O" },
-            { question: "Kimya biliminde 'Demir' elementinin periyodik tablodaki resmi simgesi hangisidir?", options: ["Fe", "De", "Ir", "F"], answer: "Fe" },
-            { question: "Kimya biliminde 'Altın' elementinin periyodik tablodaki resmi simgesi hangisidir?", options: ["Au", "Ag", "Pt", "Al"], answer: "Au" },
-            { question: "Kimya biliminde 'Gümüş' elementinin periyodik tablodaki resmi simgesi hangisidir?", options: ["Ag", "Au", "Al", "As"], answer: "Ag" },
-            { question: "Kimya biliminde 'Bakır' elementinin periyodik tablodaki resmi simgesi hangisidir?", options: ["Cu", "Co", "Cr", "Ca"], answer: "Cu" },
-            { question: "Kimya biliminde 'Azot' elementinin periyodik tablodaki resmi simgesi hangisidir?", options: ["N", "Na", "Ni", "Ne"], answer: "N" },
-            { question: "Kimya biliminde 'Sodyum' elementinin periyodik tablodaki resmi simgesi hangisidir?", options: ["Na", "N", "Ne", "Nb"], answer: "Na" },
-            { question: "Türk tarihinin en eski yazılı belgeleri kabul edilen Orhun Yazıtları bugün hangi ülkenin sınırları içerisindedir?", options: ["Moğolistan", "Kazakistan", "Özbekistan", "Kırgızistan"], answer: "Moğolistan" },
-            { question: "İstiklal Marşı'mızın bestecisi aşağıdakilerden hangisidir?", options: ["Osman Zeki Üngör", "Mehmet Akif Ersoy", "Ziya Gökalp", "Cemal Reşit Rey"], answer: "Osman Zeki Üngör" },
-            { question: "Mona Lisa tablosunun arkasındaki gizemli manzara hangi ülkeye ait nehir vadisini temsil eder?", options: ["İtalya", "Fransa", "İspanya", "Avusturya"], answer: "İtalya" },
-            { question: "Hücrenin enerji santrali olarak kabul edilen ve ATP üretimi yapan organel hangisidir?", options: ["Mitokondri", "Ribozom", "Lizozom", "Golgi cisimciği"], answer: "Mitokondri" },
-            { question: "Dünyanın en yüksek şelalesi olan Angel Şelalesi hangi Güney Amerika ülkesindedir?", options: ["Venezuela", "Brezilya", "Arjantin", "Kolombiya"], answer: "Venezuela" },
-            { question: "Birleşmiş Milletler'in resmi merkez binası hangi dünya şehrinde yer almaktadır?", options: ["New York", "Cenevre", "Brüksel", "Paris"], answer: "New York" },
-            { question: "İnsan vücudundaki en küçük kemik olan üzengi kemiği nerede bulunur?", options: ["Kulak", "Burun", "El Bileği", "Ayak Parmağı"], answer: "Kulak" },
-            { question: "Tarihte 'Sefiller' ve 'Notre Dame'ın Kamburu' gibi dev eserleri üreten Fransız yazar kimdir?", options: ["Victor Hugo", "Balzac", "Emile Zola", "Gustave Flaubert"], answer: "Victor Hugo" },
-            { question: "Bilgisayar biliminde internet ağlarının babası kabul edilen ve 'WWW' protokolünü geliştiren mucit kimdir?", options: ["Tim Berners-Lee", "Bill Gates", "Steve Jobs", "Alan Turing"], answer: "Tim Berners-Lee" },
-            { question: "Gözün renkli kısmına anatomi biliminde ne ad verilir?", options: ["İris", "Retina", "Göz Bebeği", "Kornea"], answer: "İris" }
+
+    <script>
+        // İÇİNDE SIFIR HATA BARINDIRAN GÜVENLİ SORU HAVUZU
+        const qaBank = [
+            { q: "Mısır'da kurulan ilk Türk-İslam devleti hangisidir?", o: ["Tolunoğulları", "İhşidiler", "Eyyubiler", "Memlükler"], a: "Tolunoğulları", v: 50000 },
+            { q: "Güneş sistemindeki en sıcak gezegen hangisidir?", o: ["Venüs", "Merkür", "Mars", "Jüpiter"], a: "Venüs", v: 100000 },
+            { q: "Fatih Sultan Mehmet'in şiirlerinde kullandığı ünlü mahlas nedir?", o: ["Avni", "Muhibbi", "Adli", "İlhami"], a: "Avni", v: 250000 },
+            { q: "Mariana Çukuru hangi okyanus sınırları içerisindedir?", o: ["Büyük Okyanus", "Atlas Okyanusu", "Hint Okyanusu", "Arktik Okyanusu"], a: "Büyük Okyanus", v: 500000 },
+            { q: "Aspirinin ham maddesi olan salisilik asit hangi ağaçtan elde edilir?", o: ["Söğüt", "Meşe", "Çam", "Çınar"], a: "Söğüt", v: 1000000 }
+        ];
+
+        let wallet = 0;
+        let currentQIndex = 0;
+        let currentPrize = 0;
+
+        // MOBİL SES MOTORU (Telefonun kendi ses motorunu tetikler)
+        function speak(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                let utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'tr-TR';
+                utterance.rate = 1.1;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function changeView(viewId) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active-view'));
+            document.getElementById(viewId).classList.add('active-view');
+        }
+
+        function startGame() {
+            currentQIndex = 0;
+            currentPrize = 0;
+            document.getElementById("j-50").disabled = false;
+            document.getElementById("j-sey").disabled = false;
+            changeView("view-game");
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            document.getElementById("btn-next").style.display = "none";
+            let grid = document.getElementById("box-options");
+            grid.innerHTML = "";
+
+            let data = qaBank[currentQIndex];
+            document.getElementById("txt-prize").innerText = `Ödül: ${data.v.toLocaleString()} TL`;
+            document.getElementById("txt-wallet").innerText = `Cüzdan: ${wallet.toLocaleString()} TL`;
+            document.getElementById("txt-question").innerText = data.q;
+            document.getElementById("chat-dialogue").innerText = `"Evet şef, sorun ekranda. Dikkatli odaklan."`;
             
+            // Spiker soruyu sesli okur
+            speak(data.q);
+
+            // Şıkları Karıştırıp Ekleme
+            let shuffled = [...data.o].sort(() => Math.random() - 0.5);
+            shuffled.forEach(opt => {
+                let btn = document.createElement("button");
+                btn.className = "opt-btn";
+                btn.innerText = opt;
+                btn.onclick = () => selectOpt(btn, data.a, data.v);
+                grid.appendChild(btn);
+            });
+        }
+
+        function selectOpt(selectedBtn, correctAns, value) {
+            let buttons = document.querySelectorAll(".opt-btn");
+            buttons.forEach(b => b.disabled = true);
+
+            if(selectedBtn.innerText === correctAns) {
+                selectedBtn.classList.add("correct");
+                currentPrize = value;
+                document.getElementById("chat-dialogue").innerText = `"Harika! Doğru cevabı verdin!"`;
+                speak("Tebrikler, doğru cevap!");
+            } else {
+                selectedBtn.classList.add("wrong");
+                buttons.forEach(b => {
+                    if(b.innerText === correctAns) b.classList.add("correct");
+                });
+                document.getElementById("chat-dialogue").innerText = `"Maalesef yanlış cevap. Doğru cevap: ${correctAns}"`;
+                speak("Maalesef yanlış cevap verdiniz.");
+            }
+            document.getElementById("btn-next").style.display = "block";
+        }
+
+        function nextStep() {
+            let isWrong = document.querySelector(".opt-btn.wrong");
+            if(isWrong) {
+                wallet += currentPrize;
+                alert(`Oyun Bitti! Kazancınız: ${currentPrize.toLocaleString()} TL`);
+                document.getElementById("lobby-money").innerText = `Cüzdan: ${wallet.toLocaleString()} TL`;
+                changeView("view-lobby");
+            } else {
+                currentQIndex++;
+                if(currentQIndex < qaBank.length) {
+                    loadQuestion();
+                } else {
+                    wallet += currentPrize;
+                    alert("TEBRİKLER! TÜM SORULARI BİLDİNİZ VE MİLYONER OLDUNUZ!");
+                    document.getElementById("lobby-money").innerText = `Cüzdan: ${wallet.toLocaleString()} TL`;
+                    changeView("view-lobby");
+                }
+            }
+        }
+
+        function btn5050() {
+            document.getElementById("j-50").disabled = true;
+            let data = qaBank[currentQIndex];
+            let buttons = document.querySelectorAll(".opt-btn");
+            let count = 0;
+            buttons.forEach(b => {
+                if(b.innerText !== data.a && count < 2) {
+                    b.classList.add("hidden");
+                    count++;
+                }
+            });
+        }
+
+        function btnSeyirci() {
+            document.getElementById("j-sey").disabled = true;
+            let data = qaBank[currentQIndex];
+            document.getElementById("chat-dialogue").innerText = `"Seyircilerimizin %85'i ${data.a} şıkkına güveniyor reis."`;
+            speak(`Seyirciye göre doğru cevap büyük ihtimalle ${data.a}`);
+        }
+    </script>
+</body>
+</html>
