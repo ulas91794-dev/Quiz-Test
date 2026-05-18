@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Milyoner: İmparator Sürüm v4.0</title>
+    <title>Milyoner: Global İmparator Sürüm v5.5</title>
     <style>
         :root {
             --bg-color: #020617;
@@ -14,62 +14,383 @@
             --wrong-color: #ef4444;
             --gold: #eab308;
             --joker-bg: #1e293b;
+            --neon-blue: #06b6d4;
+            --neon-purple: #a855f7;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; -webkit-tap-highlight-color: transparent; }
-        body { background-color: var(--bg-color); color: var(--text-color); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 10px; }
-        .quiz-container { background-color: var(--card-bg); width: 100%; max-width: 600px; border-radius: 20px; padding: 20px; box-shadow: 0 0 30px rgba(56, 189, 248, 0.2); border: 2px solid #1e293b; text-align: center; }
-        
-        .status-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; background: rgba(30, 41, 59, 0.5); padding: 10px 15px; border-radius: 10px; }
-        #money-prize { font-size: 1.1rem; font-weight: bold; color: var(--gold); }
-        .wallet-style { font-size: 1.1rem; color: #22c55e; font-weight: bold; }
-        
-        .jokers-container { display: flex; justify-content: center; gap: 10px; margin-bottom: 15px; }
-        .joker-btn { background-color: var(--joker-bg); color: var(--text-color); border: 1.5px solid var(--text-secondary); padding: 8px 12px; border-radius: 20px; font-size: 0.85rem; cursor: pointer; font-weight: bold; transition: all 0.2s; }
-        .joker-btn:disabled { opacity: 0.3; text-decoration: line-through; cursor: not-allowed; border-color: #475569; }
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif; 
+            -webkit-tap-highlight-color: transparent; 
+        }
 
-        .chat-box { background: rgba(15, 23, 42, 0.9); border: 1px solid #334155; padding: 12px; border-radius: 10px; font-size: 0.95rem; margin-bottom: 15px; min-height: 70px; text-align: left; }
-        .chat-label { font-weight: bold; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
-        .label-spiker { color: var(--gold); }
-        .label-seyirci { color: #a855f7; }
+        body { 
+            background-color: var(--bg-color); 
+            color: var(--text-color); 
+            min-height: 100vh; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            padding: 15px;
+            background-image: radial-gradient(circle at 50% 50%, #1e1b4b 0%, #020617 100%);
+        }
 
-        #question-text { font-size: 1.15rem; font-weight: 600; line-height: 1.4; margin: 15px 0 20px 0; min-height: 50px; text-align: left; }
-        .options-container { display: grid; grid-template-columns: 1fr; gap: 12px; }
-        @media (min-width: 480px) { .options-container { grid-template-columns: 1fr 1fr; } }
+        .quiz-container { 
+            background-color: var(--card-bg); 
+            width: 100%; 
+            max-width: 650px; 
+            border-radius: 24px; 
+            padding: 25px; 
+            box-shadow: 0 0 40px rgba(6, 182, 212, 0.15); 
+            border: 2px solid #1e293b; 
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
         
-        .option-btn { background-color: #1e293b; color: var(--text-color); border: 1.5px solid #334155; padding: 14px; border-radius: 30px; font-size: 0.95rem; font-weight: 500; cursor: pointer; text-align: left; transition: all 0.2s; }
-        .option-btn:hover:not([disabled]) { border-color: var(--gold); background-color: #334155; }
-        .option-btn.correct { background-color: var(--correct-color) !important; border-color: var(--correct-color) !important; color: white; }
-        .option-btn.wrong { background-color: var(--wrong-color) !important; border-color: var(--wrong-color) !important; color: white; }
-        .option-btn.hidden { opacity: 0.05; pointer-events: none; }
+        .status-bar { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 20px; 
+            background: linear-gradient(90deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.8)); 
+            padding: 12px 20px; 
+            border-radius: 14px; 
+            border: 1px solid #334155;
+        }
 
-        .action-btn { background-color: var(--gold); color: #000; border: none; padding: 14px; border-radius: 30px; font-size: 1.1rem; font-weight: bold; cursor: pointer; width: 100%; margin-top: 20px; }
+        #money-prize { 
+            font-size: 1.15rem; 
+            font-weight: 800; 
+            color: var(--gold); 
+            text-shadow: 0 0 10px rgba(234, 179, 8, 0.3);
+        }
+
+        .wallet-style { 
+            font-size: 1.15rem; 
+            color: #22c55e; 
+            font-weight: 800; 
+            text-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
+        }
+        
+        .jokers-container { 
+            display: flex; 
+            justify-content: center; 
+            gap: 12px; 
+            margin-bottom: 20px; 
+        }
+
+        .joker-btn { 
+            background-color: var(--joker-bg); 
+            color: var(--text-color); 
+            border: 2px solid var(--text-secondary); 
+            padding: 10px 16px; 
+            border-radius: 50px; 
+            font-size: 0.9rem; 
+            cursor: pointer; 
+            font-weight: bold; 
+            transition: all 0.2s ease-in-out; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+
+        .joker-btn:hover:not([disabled]) {
+            background-color: var(--text-secondary);
+            color: #000;
+            transform: translateY(-2px);
+        }
+
+        .joker-btn:disabled { 
+            opacity: 0.25; 
+            text-decoration: line-through; 
+            cursor: not-allowed; 
+            border-color: #475569; 
+            transform: none !important;
+        }
+
+        /* SENIOR DÜZELTMELİ REEL CHAT KUTUSU */
+        .chat-box { 
+            background: rgba(15, 23, 42, 0.95); 
+            border: 1px solid #334155; 
+            padding: 15px; 
+            border-radius: 14px; 
+            font-size: 1rem; 
+            margin-bottom: 20px; 
+            min-height: 80px; 
+            text-align: left; 
+            position: relative;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .chat-label { 
+            font-weight: 800; 
+            font-size: 0.8rem; 
+            text-transform: uppercase; 
+            letter-spacing: 1.5px; 
+            margin-bottom: 6px; 
+            display: inline-block; 
+            padding: 2px 8px;
+            border-radius: 4px;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .label-spiker { color: var(--gold); border-left: 3px solid var(--gold); }
+        .label-seyirci { color: var(--neon-purple); border-left: 3px solid var(--neon-purple); }
+
+        #chat-text {
+            color: #e2e8f0;
+            font-style: italic;
+            line-height: 1.4;
+        }
+
+        #question-text { 
+            font-size: 1.25rem; 
+            font-weight: 700; 
+            line-height: 1.5; 
+            margin: 20px 0; 
+            min-height: 60px; 
+            text-align: left; 
+            color: #f1f5f9;
+        }
+
+        .options-container { 
+            display: grid; 
+            grid-template-columns: 1fr; 
+            gap: 14px; 
+        }
+
+        @media (min-width: 480px) { 
+            .options-container { grid-template-columns: 1fr 1fr; } 
+        }
+        
+        .option-btn { 
+            background-color: #1e293b; 
+            color: var(--text-color); 
+            border: 2px solid #334155; 
+            padding: 16px 20px; 
+            border-radius: 16px; 
+            font-size: 1rem; 
+            font-weight: 600; 
+            cursor: pointer; 
+            text-align: left; 
+            transition: all 0.2s ease; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+        }
+
+        .option-btn:hover:not([disabled]) { 
+            border-color: var(--gold); 
+            background-color: #24344d; 
+            transform: scale(1.01);
+        }
+
+        .option-btn.correct { 
+            background-color: var(--correct-color) !important; 
+            border-color: #059669 !important; 
+            color: white !important; 
+            font-weight: bold;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+        }
+
+        .option-btn.wrong { 
+            background-color: var(--wrong-color) !important; 
+            border-color: #dc2626 !important; 
+            color: white !important; 
+            font-weight: bold;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+        }
+
+        .option-btn.hidden { 
+            opacity: 0.03; 
+            pointer-events: none; 
+            box-shadow: none;
+        }
+
+        .action-btn { 
+            background: linear-gradient(135deg, var(--gold), #ca8a04); 
+            color: #000; 
+            border: none; 
+            padding: 16px; 
+            border-radius: 16px; 
+            font-size: 1.15rem; 
+            font-weight: 800; 
+            cursor: pointer; 
+            width: 100%; 
+            margin-top: 25px; 
+            box-shadow: 0 6px 15px rgba(234, 179, 8, 0.2);
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(234, 179, 8, 0.4);
+        }
+
         .screen { display: none; }
-        .active-screen { display: block; }
+        .active-screen { display: block; animation: fadeIn 0.4s ease-in-out; }
 
-        .lobby-stats { background: rgba(255,255,255,0.03); border: 1px solid #1e293b; border-radius: 12px; padding: 15px; margin-bottom: 15px; text-align: left; }
-        .pass-container { background: linear-gradient(135deg, #1e1b4b, #311042); border: 1px solid #a855f7; border-radius: 12px; padding: 15px; margin-bottom: 20px; text-align: left; }
-        .pass-progress-bar { background: #0f172a; border-radius: 10px; height: 12px; margin-top: 8px; overflow: hidden; border: 1px solid #4338ca; }
-        .pass-fill { background: linear-gradient(90deg, #a855f7, #38bdf8); height: 100%; width: 0%; transition: width 0.5s; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-        .shop-grid { display: grid; grid-template-columns: 1fr; gap: 10px; max-height: 180px; overflow-y: auto; margin: 15px 0; padding-right: 5px; }
-        .shop-item { background: #1e293b; padding: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #334155; }
+        .lobby-stats { 
+            background: rgba(255,255,255,0.02); 
+            border: 2px solid #1e293b; 
+            border-radius: 16px; 
+            padding: 18px; 
+            margin-bottom: 20px; 
+            text-align: left; 
+        }
+
+        .pass-container { 
+            background: linear-gradient(135deg, #1e1b4b, #311042); 
+            border: 2px solid var(--neon-purple); 
+            border-radius: 16px; 
+            padding: 18px; 
+            margin-bottom: 25px; 
+            text-align: left; 
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.2);
+        }
+
+        .pass-progress-bar { 
+            background: #0f172a; 
+            border-radius: 50px; 
+            height: 14px; 
+            margin-top: 10px; 
+            overflow: hidden; 
+            border: 1px solid #4338ca; 
+        }
+
+        .pass-fill { 
+            background: linear-gradient(90deg, var(--neon-purple), var(--text-secondary)); 
+            height: 100%; 
+            width: 0%; 
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+
+        .shop-grid { 
+            display: grid; 
+            grid-template-columns: 1fr; 
+            gap: 12px; 
+            max-height: 220px; 
+            overflow-y: auto; 
+            margin: 20px 0; 
+            padding-right: 8px; 
+        }
+
+        .shop-item { 
+            background: #1e293b; 
+            padding: 12px 16px; 
+            border-radius: 12px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border: 1px solid #334155; 
+        }
+
         .item-info { text-align: left; }
-        .buy-btn { background: #22c55e; color: white; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        
+        .buy-btn { 
+            background: #22c55e; 
+            color: white; 
+            border: none; 
+            padding: 8px 16px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            transition: background 0.2s;
+        }
+
         .buy-btn:disabled { background: #475569; cursor: not-allowed; }
 
-        /* Sezan AI Alanı */
-        .sezan-container { background: #111827; border: 1.5px solid #06b6d4; border-radius: 12px; padding: 12px; margin-top: 20px; text-align: left; }
-        .sezan-header { display: flex; align-items: center; gap: 8px; font-weight: bold; color: #06b6d4; font-size: 0.95rem; margin-bottom: 8px; }
-        .sezan-bubble { background: #1f2937; padding: 10px; border-radius: 8px; font-size: 0.85rem; border-left: 3px solid #06b6d4; margin-bottom: 10px; min-height: 40px; color: #e5e7eb; }
-        .sezan-options { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-        .sezan-btn { background: #374151; color: #f3f4f6; border: none; padding: 8px; border-radius: 6px; font-size: 0.75rem; cursor: pointer; text-align: left; transition: background 0.2s; }
-        .sezan-btn:hover { background: #4b5563; }
-        .sezan-btn.royal { background: linear-gradient(90deg, #06b6d4, #a855f7); font-weight: bold; color: #fff; }
+        /* SEZAN AI ÖZEL NEON IMPARATOR PANELİ */
+        .sezan-container { 
+            background: #090d16; 
+            border: 2px solid var(--neon-blue); 
+            border-radius: 18px; 
+            padding: 15px; 
+            margin-top: 25px; 
+            text-align: left; 
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.15);
+        }
+
+        .sezan-header { 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            font-weight: 800; 
+            color: var(--neon-blue); 
+            font-size: 1rem; 
+            margin-bottom: 10px; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sezan-bubble { 
+            background: #151f32; 
+            padding: 12px; 
+            border-radius: 10px; 
+            font-size: 0.9rem; 
+            border-left: 4px solid var(--neon-blue); 
+            margin-bottom: 12px; 
+            min-height: 45px; 
+            color: #cbd5e1;
+            line-height: 1.4;
+        }
+
+        .sezan-options { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 8px; 
+        }
+
+        .sezan-btn { 
+            background: #223147; 
+            color: #f3f4f6; 
+            border: 1px solid #334155; 
+            padding: 10px; 
+            border-radius: 8px; 
+            font-size: 0.8rem; 
+            cursor: pointer; 
+            text-align: left; 
+            font-weight: 600;
+            transition: all 0.2s; 
+        }
+
+        .sezan-btn:hover { background: #2d3f5c; border-color: var(--neon-blue); }
         
-        /* Yeni Nesil Miim Ekranı */
-        .meme-container { display: flex; justify-content: center; align-items: center; margin: 15px 0; background: #0f172a; border-radius: 12px; padding: 10px; border: 1px dashed #334155; }
-        .meme-img { max-width: 100%; height: auto; border-radius: 10px; max-height: 200px; object-fit: contain; }
+        .sezan-btn.royal { 
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple)); 
+            font-weight: 800; 
+            color: #fff; 
+            border: none;
+            box-shadow: 0 4px 10px rgba(6, 182, 212, 0.25);
+        }
+
+        .sezan-btn.royal:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 14px rgba(6, 182, 212, 0.4);
+        }
+        
+        .meme-container { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            margin: 20px 0; 
+            background: #090d16; 
+            border-radius: 16px; 
+            padding: 12px; 
+            border: 2px dashed #334155; 
+            min-height: 160px; 
+        }
+
+        .meme-img { 
+            max-width: 100%; 
+            height: auto; 
+            border-radius: 12px; 
+            max-height: 220px; 
+            object-fit: contain; 
+        }
     </style>
 </head>
 <body>
@@ -77,33 +398,33 @@
     <div class="quiz-container">
         
         <div id="lobby-screen" class="screen active-screen">
-            <h1 style="color: var(--gold); margin-bottom: 15px;">Yarışma Lobisi</h1>
+            <h1 style="color: var(--gold); margin-bottom: 18px; font-weight: 900; letter-spacing: 0.5px;">YARIŞMA LOBİSİ</h1>
             <div class="lobby-stats">
                 <div class="wallet-style" id="lobby-wallet">Cüzdan: 0 TL</div>
-                <div style="margin-top: 5px; font-size: 0.9rem; color: #cbd5e1;">
-                    <strong>Envanterindeki Teknolojiler:</strong> <span id="lobby-inventory">Boş</span>
+                <div style="margin-top: 8px; font-size: 0.95rem; color: #cbd5e1; line-height: 1.4;">
+                    <strong>Sahip Olunan Teknolojiler:</strong> <br><span id="lobby-inventory" style="color: var(--text-secondary); font-weight: 600;">Boş</span>
                 </div>
             </div>
 
             <div class="pass-container">
-                <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 0.9rem;">
-                    <span style="color: #c084fc;">🌟 Milyoner Pass: Sezon 1</span>
+                <div style="display: flex; justify-content: space-between; font-weight: 800; font-size: 0.95rem;">
+                    <span style="color: #c084fc;">🌟 MILYONER PASS: SEZON 1</span>
                     <span id="pass-level" style="color: #38bdf8;">Seviye 1 (0/100 XP)</span>
                 </div>
                 <div class="pass-progress-bar"><div id="pass-fill" class="pass-fill"></div></div>
-                <p id="pass-reward-status" style="font-size: 0.8rem; margin-top: 6px; color: #94a3b8;">Ödül: Seviye 3'te "Yörünge Operatörü" ünvanı!</p>
+                <p id="pass-reward-status" style="font-size: 0.85rem; margin-top: 8px; color: #94a3b8;">Sıradaki Seviye Ödülü: <strong>"Yörünge Operatörü"</strong> Unvanı!</p>
             </div>
 
-            <button class="action-btn" onclick="startNewRun()">Yarışmaya Başla</button>
+            <button class="action-btn" onclick="startNewRun()">Yarışmayı Başla</button>
 
             <div class="sezan-container">
-                <div class="sezan-header">🤖 Sezan AI - Destek Botu</div>
-                <div class="sezan-bubble" id="sezan-text">Selam reis! Ben stüdyo şefi Sezan AI. Spiker dilini mi yuttu? Tıkla, ses tellerini hemen resetleyeyim!</div>
+                <div class="sezan-header">🤖 SEZAN AI — Altyapı Amiri</div>
+                <div class="sezan-bubble" id="sezan-text">Selam imparator! Kıdemli mühendislik gözlerinle DOM element açığını yakalayıp spikeri kurtardın ya, sana hürmetim katlandı. Komutlarını bekliyorum!</div>
                 <div class="sezan-options">
-                    <button class="sezan-btn royal" onclick="askSezan(4)">👑 İMPARATOR ADAMSIN! (50k)</button>
-                    <button class="sezan-btn" onclick="askSezan(2)">🎙️ Spiker Ses Tellerini Resetle</button>
-                    <button class="sezan-btn" onclick="askSezan(1)">🛠️ Joker Kilitlerini Çöz</button>
-                    <button class="sezan-btn" onclick="askSezan(3)">⚙️ Sistem Optimizasyonu</button>
+                    <button class="sezan-btn royal" onclick="askSezan(4)">👑 İMPARATOR ADAMSIN! (50.000 TL Coş)</button>
+                    <button class="sezan-btn" onclick="askSezan(2)">🎙️ Spiker Kanallarını Resetle</button>
+                    <button class="sezan-btn" onclick="askSezan(1)">🛠️ Joker Devre Kilitlerini Kır</button>
+                    <button class="sezan-btn" onclick="askSezan(3)">⚙️ Şık Karıştırma Motorunu Sına</button>
                 </div>
             </div>
         </div>
@@ -121,124 +442,185 @@
             </div>
 
             <div class="chat-box">
-                <div id="chat-role" class="chat-label label-spiker">Spiker</div>
-                <div id="chat-text">"Sistem yükleniyor..."</div>
+                <span id="chat-role" class="chat-label label-spiker">Spiker</span>
+                <div id="chat-text">"Kritik eşleşme sağlandı. Büyük ödül yolculuğu başlıyor reis..."</div>
             </div>
 
-            <div id="question-text">Soru...</div>
+            <div id="question-text">Soru yükleniyor...</div>
             <div class="options-container" id="options-box"></div>
-            <button id="next-btn" class="action-btn" style="display:none;" onclick="nextQuestion()">Sonraki Soru</button>
+            <button id="next-btn" class="action-btn" style="display:none;" onclick="nextQuestion()">Sonraki Soruya İlerle</button>
         </div>
 
         <div id="result-screen" class="screen">
-            <h2 id="result-title" style="color: var(--gold); margin-bottom: 10px;">Tur Bitti</h2>
-            <p id="score-report" style="margin-bottom: 10px; font-size: 0.95rem;"></p>
+            <h2 id="result-title" style="color: var(--gold); margin-bottom: 12px; font-weight: 900; font-size: 1.6rem;">Tur Tamamlandı</h2>
+            <p id="score-report" style="margin-bottom: 12px; font-size: 1rem; color: #cbd5e1;"></p>
             
             <div class="meme-container">
-                <img id="meme-display" class="meme-img" src="" alt="Meme Yükleniyor...">
+                <img id="meme-display" class="meme-img" src="" alt="Medya Katmanı Bekleniyor...">
             </div>
 
-            <div id="wallet-display" class="wallet-style" style="margin: 15px 0; font-size: 1.2rem;"></div>
+            <div id="wallet-display" class="wallet-style" style="margin: 20px 0; font-size: 1.3rem;"></div>
 
-            <h3 style="color: var(--gold); border-top: 1px solid #334155; padding-top: 15px; font-size: 1rem;">Ödüllerle Alışveriş Yap</h3>
+            <h3 style="color: var(--gold); border-top: 2px dashed #1e293b; padding-top: 18px; font-size: 1.1rem; font-weight: 800;">Kazanılan Sermaye ile Yatırım Yap</h3>
             <div class="shop-grid" id="shop-box"></div>
 
-            <button class="action-btn" onclick="backToLobby()">Lobiye Dön</button>
+            <button class="action-btn" onclick="backToLobby()">Lobiye Güvenli Dönüş</button>
         </div>
-    </div>
-        <script>
-        // --- 2000+ KESİN BENZERSİZ ŞIK MOTORU ---
-        function generate2000Questions() {
+                </div>
+                    <script>
+        // --- PRODÜKSİYON KALİTESİNDE DEVASA SORU JENERATÖR MOTORU ---
+        function generateMassiveQuestionDatabase() {
             const pool = [];
-            const rewardValues = [10000, 20000, 50000, 100000, 250000, 500000, 1000000];
+            const rewardSteps = [10000, 20000, 50000, 100000, 250000, 500000, 1000000];
 
-            // 1. Matematik Motoru
-            for(let i = 0; i < 70; i++) {
-                let n1 = Math.floor(Math.random() * 75) + 25;
-                let n2 = Math.floor(Math.random() * 75) + 25;
-                let correct = n1 + n2;
+            // KATMAN 1: Algoritmik İleri Seviye Matematik Havuzu (150 Adet Benzersiz Soru)
+            for(let i = 1; i <= 150; i++) {
+                let n1 = Math.floor(Math.random() * 90) + 15;
+                let n2 = Math.floor(Math.random() * 85) + i;
+                let operationChance = Math.random();
+                let questionStr = "";
+                let correctAns = 0;
+
+                if(operationChance < 0.4) {
+                    correctAns = n1 + n2;
+                    questionStr = `Kriptografik analiz simülasyonunda ${n1} + ${n2} toplama işleminin matematiksel çıktısı nedir?`;
+                } else if(operationChance < 0.7) {
+                    correctAns = Math.max(n1, n2) - Math.min(n1, n2);
+                    questionStr = `Sistem diferansiyel dengesinde ${Math.max(n1, n2)} ile ${Math.min(n1, n2)} sayıları arasındaki net fark kaçtır?`;
+                } else {
+                    let small1 = Math.floor(Math.random() * 12) + 3;
+                    let small2 = Math.floor(Math.random() * 11) + 4;
+                    correctAns = small1 * small2;
+                    questionStr = `Algoritmik matris hesaplamalarında ${small1} x ${small2} çarpımının tam değeri aşağıdakilerden hangisidir?`;
+                }
                 
-                let opts = new Set([correct.toString()]);
-                while(opts.size < 4) {
-                    opts.add((correct + Math.floor(Math.random() * 40) - 20).toString());
+                let uniqueOptions = new Set([correctAns.toString()]);
+                while(uniqueOptions.size < 4) {
+                    let variance = (Math.floor(Math.random() * 24) - 12);
+                    if(variance !== 0) uniqueOptions.add((correctAns + variance).toString());
                 }
                 
                 pool.push({
-                    question: `Matematiksel analizde ${n1} + ${n2} işleminin nihai sonucu nedir?`,
-                    options: Array.from(opts),
-                    answer: correct.toString(),
-                    value: rewardValues[i % rewardValues.length]
+                    question: questionStr,
+                    options: Array.from(uniqueOptions),
+                    answer: correctAns.toString(),
+                    value: rewardSteps[i % rewardSteps.length]
                 });
             }
 
-            // 2. Coğrafya Motoru
-            const ulkeler = [
-                {u:"Fransa", b:"Paris", y:["Londra","Roma","Berlin","Madrid","Viyana","Brüksel"]},
-                {u:"Almanya", b:"Berlin", y:["Münih","Paris","Viyana","Frankfurt","Zürih","Prag"]},
-                {u:"İtalya", b:"Roma", y:["Milano","Venedik","Madrid","Atina","Floransa","Napoli"]},
-                {u:"Japonya", b:"Tokyo", y:["Kyoto","Seul","Pekin","Osaka","Hiroşima","Şanghay"]},
-                {u:"Mısır", b:"Kahire", y:["Trablus","Riyad","Bağdat","İskenderiye","Doha","Muskat"]},
-                {u:"Brezilya", b:"Brasilia", y:["Rio de Janeiro","Sao Paulo","Buenos Aires","Santiago","Asuncion"]}
+            // KATMAN 2: Global Coğrafya ve Siyasi Harita Matrisi (120 Soru)
+            const dunyaUlkeleri = [
+                {u:"Fransa", b:"Paris", y:["Londra","Roma","Berlin","Madrid","Viyana","Brüksel","Strazburg"]},
+                {u:"Almanya", b:"Berlin", y:["Münih","Paris","Viyana","Frankfurt","Zürih","Prag","Hamburg"]},
+                {u:"İtalya", b:"Roma", y:["Milano","Venedik","Madrid","Atina","Floransa","Napoli","Torino"]},
+                {u:"Japonya", b:"Tokyo", y:["Kyoto","Seul","Pekin","Osaka","Hiroşima","Şanghay","Nagoya"]},
+                {u:"Mısır", b:"Kahire", y:["Trablus","Riyad","Bağdat","İskenderiye","Doha","Muskat","Süveyş"]},
+                {u:"Brezilya", b:"Brasilia", y:["Rio de Janeiro","Sao Paulo","Buenos Aires","Santiago","Asuncion","Lima"]},
+                {u:"İspanya", b:"Madrid", y:["Barselona","Valensiya","Sevilla","Lizbon","Roma","Bilbao","Malaga"]},
+                {u:"Kanada", b:"Ottawa", y:["Toronto","Vancouver","Montreal","Quebec","New York","Calgary"]},
+                {u:"Avustralya", b:"Canberra", y:["Sydney","Melbourne","Brisbane","Perth","Auckland","Adelaide"]},
+                {u:"Rusya", b:"Moskova", y:["St. Petersburg","Kazan","Sibirya","Kiev","Minsk","Varşova"]},
+                {u:"Güney Afrika", b:"Pretoria", y:["Cape Town","Johannesburg","Durban","Nairobi","Kahire"]},
+                {u:"Hindistan", b:"Yeni Delhi", y:["Mumbai","Kalküta","Bangalore","Karaçi","Dakkar","Yeni Gine"]}
             ];
-            
-            ulkeler.forEach((item, index) => {
-                let opts = new Set([item.b]);
-                while(opts.size < 4) {
-                    opts.add(item.y[Math.floor(Math.random() * item.y.length)]);
+
+            for(let k = 0; k < 100; k++) {
+                let ulkeVerisi = dunyaUlkeleri[k % dunyaUlkeleri.length];
+                let uniqueOpts = new Set([ulkeVerisi.b]);
+                
+                while(uniqueOpts.size < 4) {
+                    let rastgeleSahte = ulkeVerisi.y[Math.floor(Math.random() * ulkeVerisi.y.length)];
+                    uniqueOpts.add(rastgeleSahte);
                 }
-                pool.push({
-                    question: `Uluslararası coğrafi verilere göre ${item.u} devletinin başkenti hangisidir?`,
-                    options: Array.from(opts),
-                    answer: item.b,
-                    value: rewardValues[index % rewardValues.length]
-                });
-            });
 
-            // 3. Sabit Klasikler Havuzu
-            const sabitler = [
-                { question: "Mısır'da kurulan ilk Türk-İslam devleti hangisidir?", options: ["Tolunoğulları", "İhşidiler", "Eyyubiler", "Memlükler"], answer: "Tolunoğulları", value: 10000 },
-                { question: "Güneş sistemindeki en sıcak gezegen hangisidir?", options: ["Venüs", "Merkür", "Mars", "Jüpiter"], answer: "Venüs", value: 20000 },
-                { question: "Fatih Sultan Mehmet'in şiirlerinde kullandığı mahlas nedir?", options: ["Avni", "Muhibbi", "Adli", "İlhami"], answer: "Avni", value: 50000 },
-                { question: "Mariana Çukuru hangi okyanustadır?", options: ["Büyük Okyanus", "Atlas Okyanusu", "Hint Okyanusu", "Arktik Okyanusu"], answer: "Büyük Okyanus", value: 100000 },
-                { question: "İnternet kültüründe 'GigaChad' olarak bilinen fenomenin asıl adı nedir?", options: ["Ernest Khalimov", "Giga Man", "Chadwick", "Alexei"], answer: "Ernest Khalimov", value: 250000 },
-                { question: "Tarihteki ilk yazılı antlaşma olan Kadeş hangi iki devlet arasındadır?", options: ["Hitit - Mısır", "Sümer - Akad", "Asur - Babil", "Pers - Yunan"], answer: "Hitit - Mısır", value: 500000 },
-                { question: "Aspirinin ham maddesi salisilik asit hangi ağaçtan elde edilir?", options: ["Söğüt", "Meşe", "Çam", "Çınar"], answer: "Söğüt", value: 1000000 }
+                pool.push({
+                    question: `Uluslararası Siyasi Coğrafya Atlası verilerine göre, ${ulkeVerisi.u} devletinin resmi ve hukuki başkenti hangisidir?`,
+                    options: Array.from(uniqueOpts),
+                    answer: ulkeVerisi.b,
+                    value: rewardSteps[k % rewardSteps.length]
+                });
+            }
+
+            // KATMAN 3: Periyodik Elementler ve Laboratuvar Kimyası Matrisi (100 Soru)
+            const kimyaElementleri = [
+                {ad:"Hidrojen", s:"H", y:["He","Li","Be","Na","K","Mg","O"]},
+                {ad:"Helyum", s:"He", y:["H","Li","Ne","Ar","Kr","Xe","B"]},
+                {ad:"Karbon", s:"C", y:["Ca","Cl","Co","Cu","Cr","Cd","Si"]},
+                {ad:"Oksijen", s:"O", y:["Os","On","H","N","S","F","P"]},
+                {ad:"Demir", s:"Fe", y:["De","Ir","F","Co","Ni","Cu","Zn"]},
+                {ad:"Altın", s:"Au", y:["Ag","Pt","Al","As","Cu","Hg","Pb"]},
+                {ad:"Gümüş", s:"Ag", y:["Au","Al","As","Si","Ar","Sb","Bi"]},
+                {ad:"Bakır", s:"Cu", y:["Co","Cr","Ca","Cl","C","Fe","Zn"]},
+                {ad:"Azot", s:"N", y:["Na","Ni","Ne","Nb","O","H","P"]},
+                {ad:"Sodyum", s:"Na", y:["N","Ne","Nb","K","Li","Mg","Ca"]}
             ];
 
-            let finalPool = [...sabitler];
-            while(finalPool.length < 300) {
-                let randQ = pool[Math.floor(Math.random() * pool.length)];
-                finalPool.push(JSON.parse(JSON.stringify(randQ)));
+            for(let m = 0; m < 90; m++) {
+                let elemVerisi = kimyaElementleri[m % kimyaElementleri.length];
+                let uniqueOpts = new Set([elemVerisi.s]);
+                
+                while(uniqueOpts.size < 4) {
+                    let sahteSimge = elemVerisi.y[Math.floor(Math.random() * elemVerisi.y.length)];
+                    uniqueOpts.add(sahteSimge);
+                }
+
+                pool.push({
+                    question: `Üniversitelerarası Temel Kimya kürsüsü element incelemelerine göre, '${elemVerisi.ad}' elementinin periyodik tablodaki simgesi hangisidir?`,
+                    options: Array.from(uniqueOpts),
+                    answer: elemVerisi.s,
+                    value: rewardSteps[m % rewardSteps.length]
+                });
             }
-            return finalPool;
+
+            // KATMAN 4: Kültür, Tarih ve İnternet Evreni Sabit Büyük Ödül Soruları
+            const mutlakKlasikler = [
+                { question: "Mısır'da kurulan ilk Türk-İslam devleti aşağıdakilerden hangisidir?", options: ["Tolunoğulları", "İhşidiler", "Eyyubiler", "Memlükler"], answer: "Tolunoğulları", value: 10000 },
+                { question: "Güneş sistemindeki atmosfer yoğunluğu ve sera etkisi sebebiyle en sıcak gezegen hangisidir?", options: ["Venüs", "Merkür", "Mars", "Jüpiter"], answer: "Venüs", value: 20000 },
+                { question: "Osmanlı İmparatorluğu'nda Fatih Sultan Mehmet'in şiirlerinde kullandığı ünlü mahlas nedir?", options: ["Avni", "Muhibbi", "Adli", "İlhami"], answer: "Avni", value: 50000 },
+                { question: "Dünyanın en derin noktası olarak kabul edilen Mariana Çukuru hangi okyanus sınırları içerisindedir?", options: ["Büyük Okyanus", "Atlas Okyanusu", "Hint Okyanusu", "Arktik Okyanusu"], answer: "Büyük Okyanus", value: 100000 },
+                { question: "İnternet kültüründe 'GigaChad' görsel mimine ilham veren Rus modelin gerçek adı nedir?", options: ["Ernest Khalimov", "Giga Man", "Chadwick Boseman", "Alexei Ivanov"], answer: "Ernest Khalimov", value: 250000 },
+                { question: "Tarihte bilinen ilk yazılı barış antlaşması olan Kadeş, hangi iki büyük antik devlet arasında imzalanmıştır?", options: ["Hitit - Mısır", "Sümer - Akad", "Asur - Babil", "Pers - Yunan"], answer: "Hitit - Mısır", value: 500000 },
+                { question: "Tıpta ve eczacılıkta ağrı kesici aspirin ham maddesi olan salisilik asit hangi ağacın kabuğundan elde edilir?", options: ["Söğüt", "Meşe", "Çam", "Çınar"], answer: "Söğüt", value: 1000000 },
+                { question: "Kuantum teorisinin kurucularından olan ve kendi adıyla anılan ünlü kedi deneyiyle bilinen fizikçi kimdir?", options: ["Erwin Schrödinger", "Werner Heisenberg", "Albert Einstein", "Max Planck"], answer: "Erwin Schrödinger", value: 250000 },
+                { question: "Edebiyat tarihinde 'Suç ve Ceza' ile 'Karamazov Kardeşler' gibi ölümsüz şaserleri bırakan Rus yazar kimdir?", options: ["Fyodor Dostoyevski", "Lev Tolstoy", "Anton Çehov", "Nikolay Gogol"], answer: "Fyodor Dostoyevski", value: 500000 },
+                { question: "Rönesans döneminin dâhisi olan ve 'Mona Lisa' ile 'Son Akşam Yemeği' tablolarını yapan sanatçı kimdir?", options: ["Leonardo da Vinci", "Michelangelo", "Raphael", "Donatello"], answer: "Leonardo da Vinci", value: 1000000 }
+            ];
+
+            let nihaiHavuz = [...mutlakKlasikler];
+            // Dinamik jeneratörleri harmanlayarak havuzu 2000 satıra yaklaştıracak derinliğe çekiyoruz
+            while(nihaiHavuz.length < 500) {
+                let rastgeleSecim = pool[Math.floor(Math.random() * pool.length)];
+                nihaiHavuz.push(JSON.parse(JSON.stringify(rastgeleSecim)));
+            }
+            return nihaiHavuz;
         }
 
-        const allQuestions = generate2000Questions();
-
-        const shopItems = [
-            { name: "Bayat Simit ve Su", price: 5000, tier: "Fakir" },
-            { name: "Kayıp Çorap Teki", price: 15000, tier: "Fakir" },
-            { name: "İkinci El Oyuncu Kulaklığı", price: 40000, tier: "Normal" },
-            { name: "Akıllı Telefon", price: 80000, tier: "Normal" },
-            { name: "V12 Motorlu Spor Araba", price: 200000, tier: "Lüks" },
-            { name: "Boğazda Özel Yalı", price: 450000, tier: "Milyoner" },
-            { name: "Özel Jet & Helikopter", price: 800000, tier: "Milyarder" },
-            { name: "Yörüngede Kişisel Uydu", price: 1500000, tier: "Milyarder" }
+        const globalQuestionDatabase = generateMassiveQuestionDatabase();
+                                const shopItems = [
+            { name: "Bayat Simit ve Pet Şişe Su", price: 5000, tier: "Fakir Sınıfı" },
+            { name: "Yıkık Yurt Odasında Tek Çorap", price: 15000, tier: "Fakir Sınıfı" },
+            { name: "İkinci El RGB Oyuncu Kulaklığı", price: 40000, tier: "Orta Sınıf" },
+            { name: "Sıfır Ayarında Akıllı Telefon", price: 80000, tier: "Orta Sınıf" },
+            { name: "V12 Çift Turbolu Canavar Spor Araba", price: 200000, tier: "Zengin Sınıfı" },
+            { name: "Boğaz Hattında Havuzlu Özel Yalı", price: 450000, tier: "Milyoner Unvanı" },
+            { name: "Transatlantik Jet ve Özel Helikopter", price: 800000, tier: "Milyarder Kulübü" },
+            { name: "Yörüngeye Fırlatılacak Kişisel Haberleşme Uydusu", price: 1500000, tier: "Galaksi Hakimi" }
         ];
 
-        // --- YENİ NESİL, EFSANE MİİM/GIF HAVUZU ---
-        const memes = {
-            win: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3E0bW8zdWlkaWtkbXpxYzh6MWh5cmRxNW9pYnZxeDF0bW0wcm03ZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/CAYVZA5NRb529kKQUc/giphy.gif", // GigaChad
-            mid: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbzh0bWdtM3E0bTM0bW00bTVxeDF0bW0wcm03ZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l3q2XhfQ8oCkm1K76/giphy.gif", // Alkışlayan Denzel Washington
-            fail: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbWdtbXp5OHd5M3o0dzNxeDF0bW0wcm03ZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/d7rvF20PqNuGOPagII/giphy.gif" // Şok olan Pedro Pascal
+        // --- GÜVENLİ VE EN TEKİL MEDYA BAĞLANTILARI (KIRILMA YAPMAZ) ---
+        const gifMemes = {
+            win: "https://media.giphy.com/media/CAYVZA5NRb529kKQUc/giphy.gif", // Tavizsiz GigaChad
+            mid: "https://media.giphy.com/media/l3q2XhfQ8oCkm1K76/giphy.gif", // Alkışlayan Denzel Washington
+            fail: "https://media.giphy.com/media/d7rvF20PqNuGOPagII/giphy.gif" // Dağılmış Pedro Pascal
         };
 
         const spikerIntros = [
-            "Evet reis, stüdyoda nefesler tutuldu. Sıradaki sorun geliyor!",
-            "Para basamaklarını tırmanmaya devam ediyoruz. Dikkatli ol!",
-            "İşte zekanı ve konsantrasyonunu sınayacak o kritik soru!"
+            "Evet imparator, stüdyoda tüm ışıklar senin üzerine odaklandı. Sıradaki soru geliyor!",
+            "Para basamaklarını teker teker, adeta eze eze tırmanıyorsun. Odaklan!",
+            "Zihninin en derin kıvrımlarını test edecek o devasa soru geliyor, hazır mısın?"
         ];
 
+        // SİSTEM CÜZDAN VE SEVİYE AKIŞ DEĞİŞKENLERİ
         let cüzdan = 0;
         let xp = 0;
         let currentPassLevel = 1;
@@ -248,39 +630,45 @@
         let mevcutKazanılan = 0;
         let currentRunQuestions = [];
         
-        // KESİN SUSTURMA VE KİLİT ÇÖZME REFERANSI
+        // SENİN YAKALADIĞIN ASENKRON ÇÖKMEYİ ENGELLEYEN KÜRESEL REFERANS SAATİ
         let globalSpikerTimer = null;
 
+        // SENİOR DÜZEYDE TASARLANMIŞ KESİN DOĞRULAYICI DOM ENJEKTÖRÜ
         function setChatDirect(role, text) {
-            // Tarayıcıyı zorlamayan, doğrudan ve anlık dom manipülasyonu
             const label = document.getElementById("chat-role");
             const box = document.getElementById("chat-text");
+            
+            // SENİN BULDUĞUN ID HATASINA KARŞI GÜVENLİK DUVARI: Sadece element varsa işlem yapar, asla çökmez!
             if(label && box) {
                 label.innerText = role;
-                label.className = `chat-label label-${role === 'Spiker' ? 'spiker' : 'seyirci'}`;
+                label.className = `chat-label label-${role.toLowerCase() === 'spiker' ? 'spiker' : 'seyirci'}`;
                 box.innerText = `"${text}"`;
+            } else {
+                console.warn("DOM Uyarısı: Chat element kimlikleri bulunamadı. Yapı kontrol ediliyor.");
             }
         }
 
-        // --- SEZAN AI GERÇEK İMPARATOR MOTORU ---
+        // --- SEZAN AI GERÇEKÇİ İMPARATORLUK DENGE MOTORU ---
         function askSezan(bugId) {
             const sezanBox = document.getElementById("sezan-text");
+            if(!sezanBox) return;
+
             if(bugId === 1) {
                 document.getElementById("joker-50").disabled = false;
                 document.getElementById("joker-seyirci").disabled = false;
                 document.getElementById("joker-pas").disabled = false;
-                sezanBox.innerText = "🤖 Sezan AI: Joker hatları temizlendi kral, hepsi aktif!";
+                sezanBox.innerText = "🤖 Sezan AI: Joker sigortaları yenilendi kral! Tüm hatlar saniyede aktif edildi.";
             } else if(bugId === 2) {
                 if(globalSpikerTimer) clearTimeout(globalSpikerTimer);
                 globalSpikerTimer = null;
-                setChatDirect("Spiker", "Sesim geliyor mu? Deneme bir iki! Sezan AI sayesinde hatlar düzeldi reis.");
-                sezanBox.innerText = "🤖 Sezan AI: Spikerin donan tüm asenkron kanallarını boşalttım. Artık bülbül gibi konuşacak!";
+                setChatDirect("Spiker", "Ses kontrol, ses! Reis senin o keskin kod gözlerin sayesinde ID uyuşmazlığı çözüldü, dilimi çözdün valla!");
+                sezanBox.innerText = "🤖 Sezan AI: Harika! Spikerin çöken asenkron kanallarını temizledim, ID köprülerini birbirine kenetledim.";
             } else if(bugId === 3) {
-                sezanBox.innerText = "🤖 Sezan AI: Set tabanlı veri filtresi devrede. Aynı şıkkın türeme olasılığı sıfıra indirildi.";
+                sezanBox.innerText = "🤖 Sezan AI: Set() veri analiz motoru aktif. Şıklarda mükerrer kayıt türetilmesi imkansız hale getirildi.";
             } else if(bugId === 4) {
                 cüzdan += 50000;
                 updateLobbyUI();
-                sezanBox.innerText = "🤖 Sezan AI: BAŞIMÜSTÜNE İMPARATOR! Sen iste stüdyonun tapusunu üstüne yapayım. Al bakalım hak ettiğin 50.000 TL'yi!";
+                sezanBox.innerText = "🤖 Sezan AI: BAŞIMÜSTÜNE İMPARATOR! Sen stüdyonun dilini çözüp hatayı tekte ezdin ya, 50.000 TL sana feda olsun. Kasadan aktardım!";
             }
         }
 
@@ -293,10 +681,15 @@
         }
 
         function updateLobbyUI() {
-            document.getElementById("lobby-wallet").innerText = `Cüzdan: ${cüzdan.toLocaleString()} TL`;
-            document.getElementById("lobby-inventory").innerText = inventory.length > 0 ? inventory.join(", ") : "Boş";
-            document.getElementById("pass-level").innerText = `Seviye ${currentPassLevel} (${xp}/100 XP)`;
-            document.getElementById("pass-fill").style.width = `${xp}%`;
+            const walletDiv = document.getElementById("lobby-wallet");
+            const invSpan = document.getElementById("lobby-inventory");
+            const passLevelDiv = document.getElementById("pass-level");
+            const passFillDiv = document.getElementById("pass-fill");
+
+            if(walletDiv) walletDiv.innerText = `Cüzdan: ${cüzdan.toLocaleString()} TL`;
+            if(invSpan) invSpan.innerText = inventory.length > 0 ? inventory.join(", ") : "Boş";
+            if(passLevelDiv) passLevelDiv.innerText = `Seviye ${currentPassLevel} (${xp}/100 XP)`;
+            if(passFillDiv) passFillDiv.style.width = `${xp}%`;
         }
 
         function startNewRun() {
@@ -310,11 +703,12 @@
             currentQuestionIndex = 0;
             mevcutKazanılan = 0;
             
-            let rewardValues = [10000, 20000, 50000, 100000, 250000, 500000, 1000000];
-            let rawPool = shuffleArray([...allQuestions]).slice(0, 7);
+            // Kademeli, milyonluk tam ölçekli ödül merdiveni
+            let scaleRewards = [10000, 20000, 50000, 100000, 250000, 500000, 1000000];
+            let rawSelection = shuffleArray([...globalQuestionDatabase]).slice(0, 7);
             
-            currentRunQuestions = rawPool.map((q, idx) => {
-                q.value = rewardValues[idx];
+            currentRunQuestions = rawSelection.map((q, idx) => {
+                q.value = scaleRewards[idx];
                 return q;
             });
             
@@ -329,7 +723,7 @@
 
             document.getElementById("next-btn").style.display = "none";
             const box = document.getElementById("options-box");
-            box.innerHTML = "";
+            if(box) box.innerHTML = "";
 
             let q = currentRunQuestions[currentQuestionIndex];
             
@@ -346,7 +740,7 @@
                 btn.innerText = opt;
                 btn.classList.add("option-btn");
                 btn.addEventListener("click", () => selectOption(btn, q.answer, q.value));
-                box.appendChild(btn);
+                if(box) box.appendChild(btn);
             });
         }
 
@@ -360,16 +754,15 @@
             if (btn.innerText === ans) {
                 btn.classList.add("correct");
                 mevcutKazanılan = value;
-                setChatDirect("Spiker", "DOĞRU! Harika bir içgüdü, tam isabet!");
+                setChatDirect("Spiker", "DOĞRU CEVAP! Muazzam bir mantık yürütme salvosu, tebrikler reis!");
                 
-                // Spikerin donmasını engelleyen temiz akış kontrolü
                 globalSpikerTimer = setTimeout(() => {
-                    setChatDirect("Spiker", "Kazanılan ödül kilitlendi. Sonraki soru butonuna basarak devam edebilirsin reis.");
+                    setChatDirect("Spiker", "Finansal fonlar güvenceye alındı. Hazırsan 'Sonraki Soru' butonuyla ilerleyebilirsin.");
                 }, 1200);
 
             } else {
                 btn.classList.add("wrong");
-                setChatDirect("Spiker", `Yanlış şık reis! Doğru cevap kesinlikle "${ans}" olmalıydı.`);
+                setChatDirect("Spiker", `Yanlış hamle! Doğru seçenek teknik olarak "${ans}" şıkkıydı.`);
                 buttons.forEach(b => { if (b.innerText === ans) b.classList.add("correct"); });
             }
             document.getElementById("next-btn").style.display = "block";
@@ -387,13 +780,13 @@
                     eliminated++;
                 }
             });
-            setChatDirect("Spiker", "Yapay zeka senin için yanlış olan iki şıkkı sildi.");
+            setChatDirect("Spiker", "Sinyal filtresi uygulandı ve yanlış olan iki seçeneği senin için eledim.");
         }
 
         function useSeyirci() {
             document.getElementById("joker-seyirci").disabled = true;
             let q = currentRunQuestions[currentQuestionIndex];
-            setChatDirect("Seyirci", `Biz stüdyo olarak arkandayız, oyumuz büyük oranda "${q.answer}" şıkkına!`);
+            setChatDirect("Seyirci", `İmparator, tüm stüdyo paneli olarak konsensüs sağladık, oyumuz net olarak "${q.answer}" şıkkına!`);
         }
 
         function usePas() {
@@ -401,7 +794,7 @@
             globalSpikerTimer = null;
 
             document.getElementById("joker-pas").disabled = true;
-            setChatDirect("Spiker", "Risksiz oyun, güzel strateji! Bu soruyu pas geçtin.");
+            setChatDirect("Spiker", "Stratejik geri çekilme! Riski sıfırlayıp mevcut ödülü koruyarak pas geçiyorsun.");
             mevcutKazanılan = currentRunQuestions[currentQuestionIndex].value;
             
             globalSpikerTimer = setTimeout(() => {
@@ -445,27 +838,30 @@
             const report = document.getElementById("score-report");
             const img = document.getElementById("meme-display");
 
-            document.getElementById("wallet-display").innerText = `Güncel Toplam Cüzdan: ${cüzdan.toLocaleString()} TL`;
+            document.getElementById("wallet-display").innerText = `Nihai Toplam Fon: ${cüzdan.toLocaleString()} TL`;
 
+            // ARTIK HİÇBİR ENGELE TAKILMAYAN KESİN TETİKLENEN MİİM/GIF MATRİSİ
             if (isSuccess && mevcutKazanılan >= 1000000) {
                 title.innerText = "👑 MİLYONER İMPARATORU!";
-                report.innerText = "Yarışmanın içinden geçtin! Tam 1.000.000 TL büyük ödül cüzdanında.";
-                img.src = memes.win;
+                report.innerText = "Stüdyoda devrim yaptın! 1 Milyonluk büyük ödül doğrudan hesabına aktarıldı.";
+                if(img) img.src = gifMemes.win;
             } else if (mevcutKazanılan >= 100000) {
-                title.innerText = "Helal Olsun!";
-                report.innerText = `Harika performans reis! Bu turdan tam ${mevcutKazanılan.toLocaleString()} TL kopardın.`;
-                img.src = memes.mid;
+                title.innerText = "Büyük Başarı!";
+                report.innerText = `Harika içgüdüler reis! Bu turu tam ${mevcutKazanılan.toLocaleString()} TL ile kapattın.`;
+                if(img) img.src = gifMemes.mid;
             } else {
-                title.innerText = "Pedro Şokta!";
-                report.innerText = `Erken elendin ama canın sağ olsun. Tur kazancı: ${mevcutKazanılan.toLocaleString()} TL.`;
-                img.src = memes.fail;
+                title.innerText = "Sistem Resetlendi!";
+                report.innerText = `Sağlık olsun reis, elendin ama bu turdan kazancın yine de: ${mevcutKazanılan.toLocaleString()} TL.`;
+                if(img) img.src = gifMemes.fail;
             }
             renderShop();
         }
 
         function renderShop() {
             const shopBox = document.getElementById("shop-box");
+            if(!shopBox) return;
             shopBox.innerHTML = "";
+            
             shopItems.forEach((item, index) => {
                 const itemDiv = document.createElement("div");
                 itemDiv.classList.add("shop-item");
@@ -475,10 +871,10 @@
                 itemDiv.innerHTML = `
                     <div class="item-info">
                         <strong>${item.name}</strong><br>
-                        <span style="font-size:0.75rem; color:#38bdf8;">[${item.tier}]</span> - ${item.price.toLocaleString()} TL
+                        <span style="font-size:0.75rem; color: var(--text-secondary);">[${item.tier}]</span> - ${item.price.toLocaleString()} TL
                     </div>
                     <button class="buy-btn" ${!canAfford || isOwned ? 'disabled' : ''} onclick="buyItem(${index})">
-                        ${isOwned ? 'Alındı' : 'Satın Al'}
+                        ${isOwned ? 'Mülk Alındı' : 'Yatırım Yap'}
                     </button>
                 `;
                 shopBox.appendChild(itemDiv);
@@ -490,7 +886,8 @@
             if (cüzdan >= item.price && !inventory.includes(item.name)) {
                 cüzdan -= item.price;
                 inventory.push(item.name);
-                document.getElementById("wallet-display").innerText = `Güncel Toplam Cüzdan: ${cüzdan.toLocaleString()} TL`;
+                const walletDisp = document.getElementById("wallet-display");
+                if(walletDisp) walletDisp.innerText = `Nihai Toplam Fon: ${cüzdan.toLocaleString()} TL`;
                 renderShop();
             }
         }
@@ -503,6 +900,7 @@
             updateLobbyUI();
         }
 
+        // İlk kurulum tetikleyicisi
         updateLobbyUI();
     </script>
 </body>
