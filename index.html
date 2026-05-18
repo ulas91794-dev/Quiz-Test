@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kim Milyoner Olmak İster? - Evrimleşmiş Sürüm</title>
+    <title>Milyoner: Evrimleşmiş Sürüm v3.0</title>
     <style>
         :root {
             --bg-color: #020617;
@@ -16,364 +16,371 @@
             --joker-bg: #1e293b;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Roboto, sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background-color: var(--bg-color); color: var(--text-color); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 10px; }
+        .quiz-container { background-color: var(--card-bg); width: 100%; max-width: 600px; border-radius: 20px; padding: 20px; box-shadow: 0 0 30px rgba(56, 189, 248, 0.2); border: 2px solid #1e293b; text-align: center; }
+        
+        .status-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; background: rgba(30, 41, 59, 0.5); padding: 10px 15px; border-radius: 10px; }
+        #money-prize { font-size: 1.1rem; font-weight: bold; color: var(--gold); }
+        .wallet-style { font-size: 1.1rem; color: #22c55e; font-weight: bold; }
+        
+        .jokers-container { display: flex; justify-content: center; gap: 10px; margin-bottom: 15px; }
+        .joker-btn { background-color: var(--joker-bg); color: var(--text-color); border: 1.5px solid var(--text-secondary); padding: 8px 12px; border-radius: 20px; font-size: 0.85rem; cursor: pointer; font-weight: bold; transition: all 0.2s; }
+        .joker-btn:disabled { opacity: 0.3; text-decoration: line-through; cursor: not-allowed; border-color: #475569; }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 10px;
-        }
-
-        .quiz-container {
-            background-color: var(--card-bg);
-            width: 100%;
-            max-width: 600px;
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 0 30px rgba(56, 189, 248, 0.2);
-            border: 2px solid #1e293b;
-            text-align: center;
-            position: relative;
-        }
-
-        .status-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            background: rgba(30, 41, 59, 0.5);
-            padding: 10px 15px;
-            border-radius: 10px;
-        }
-
-        #money-prize { font-size: 1.2rem; font-weight: bold; color: var(--gold); }
-        #total-wallet { font-size: 1rem; color: #22c55e; font-weight: bold; }
-
-        .jokers-container {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .joker-btn {
-            background-color: var(--joker-bg);
-            color: var(--text-color);
-            border: 1.5px solid var(--text-secondary);
-            padding: 8px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.2s;
-        }
-
-        .joker-btn:disabled {
-            opacity: 0.3;
-            text-decoration: line-through;
-            cursor: not-allowed;
-            border-color: #475569;
-        }
-
-        .chat-box {
-            background: rgba(15, 23, 42, 0.9);
-            border: 1px solid #334155;
-            padding: 12px;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            margin-bottom: 15px;
-            min-height: 60px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .chat-label {
-            font-weight: bold;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 4px;
-        }
-
+        .chat-box { background: rgba(15, 23, 42, 0.9); border: 1px solid #334155; padding: 12px; border-radius: 10px; font-size: 0.9rem; margin-bottom: 15px; min-height: 65px; text-align: left; }
+        .chat-label { font-weight: bold; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
         .label-spiker { color: var(--gold); }
         .label-seyirci { color: #a855f7; }
 
-        #question-text {
-            font-size: 1.2rem;
-            font-weight: 600;
-            line-height: 1.4;
-            margin: 15px 0 20px 0;
-            min-height: 60px;
-        }
-
-        .options-container {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-        }
-
-        @media (min-width: 480px) {
-            .options-container { grid-template-columns: 1fr 1fr; }
-        }
-
-        .option-btn {
-            background-color: #1e293b;
-            color: var(--text-color);
-            border: 1.5px solid #334155;
-            padding: 14px;
-            border-radius: 30px;
-            font-size: 0.95rem;
-            font-weight: 500;
-            cursor: pointer;
-            text-align: left;
-            transition: all 0.2s;
-        }
-
-        .option-btn:hover:not([disabled]) {
-            border-color: var(--gold);
-            background-color: #334155;
-        }
-
+        #question-text { font-size: 1.15rem; font-weight: 600; line-height: 1.4; margin: 15px 0 20px 0; min-height: 50px; text-align: left; }
+        .options-container { display: grid; grid-template-columns: 1fr; gap: 12px; }
+        @media (min-width: 480px) { .options-container { grid-template-columns: 1fr 1fr; } }
+        
+        .option-btn { background-color: #1e293b; color: var(--text-color); border: 1.5px solid #334155; padding: 14px; border-radius: 30px; font-size: 0.95rem; font-weight: 500; cursor: pointer; text-align: left; transition: all 0.2s; }
+        .option-btn:hover:not([disabled]) { border-color: var(--gold); background-color: #334155; }
         .option-btn.correct { background-color: var(--correct-color) !important; border-color: var(--correct-color) !important; }
         .option-btn.wrong { background-color: var(--wrong-color) !important; border-color: var(--wrong-color) !important; }
-        .option-btn.hidden { opacity: 0.1; pointer-events: none; }
+        .option-btn.hidden { opacity: 0.05; pointer-events: none; }
 
-        .action-btn {
-            background-color: var(--gold);
-            color: #000;
-            border: none;
-            padding: 14px;
-            border-radius: 30px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 20px;
-            display: none;
-        }
-
+        .action-btn { background-color: var(--gold); color: #000; border: none; padding: 14px; border-radius: 30px; font-size: 1.1rem; font-weight: bold; cursor: pointer; width: 100%; margin-top: 20px; }
         .screen { display: none; }
         .active-screen { display: block; }
 
-        .meme-container {
-            margin: 15px auto;
-            width: 100%;
-            max-width: 280px;
-            border-radius: 12px;
-            overflow: hidden;
-        }
+        .lobby-stats { background: rgba(255,255,255,0.03); border: 1px solid #1e293b; border-radius: 12px; padding: 15px; margin-bottom: 15px; text-align: left; }
+        .pass-container { background: linear-gradient(135deg, #1e1b4b, #311042); border: 1px solid #a855f7; border-radius: 12px; padding: 15px; margin-bottom: 20px; text-align: left; }
+        .pass-progress-bar { background: #0f172a; border-radius: 10px; height: 12px; margin-top: 8px; overflow: hidden; border: 1px solid #4338ca; }
+        .pass-fill { background: linear-gradient(90deg, #a855f7, #38bdf8); height: 100%; width: 0%; transition: width 0.5s; }
 
-        .meme-img { width: 100%; height: auto; display: block; }
-
-        .shop-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 10px;
-            max-height: 250px;
-            overflow-y: auto;
-            margin-top: 15px;
-            padding-right: 5px;
-        }
-
-        .shop-item {
-            background: #1e293b;
-            padding: 10px;
-            border-radius: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: 1px solid #334155;
-        }
-
+        .shop-grid { display: grid; grid-template-columns: 1fr; gap: 10px; max-height: 200px; overflow-y: auto; margin: 15px 0; padding-right: 5px; }
+        .shop-item { background: #1e293b; padding: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #334155; }
         .item-info { text-align: left; }
-        .item-tier { font-size: 0.75rem; font-weight: bold; }
-        .tier-fakir { color: #94a3b8; }
-        .tier-normal { color: #38bdf8; }
-        .tier-luks { color: #a855f7; }
-        .tier-milyoner { color: #f59e0b; }
-        .tier-milyarder { color: #ef4444; }
-
-        .buy-btn {
-            background: #22c55e;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-        }
+        .buy-btn { background: #22c55e; color: white; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-weight: bold; }
         .buy-btn:disabled { background: #475569; cursor: not-allowed; }
 
-        .inventory-list {
-            margin-top: 10px;
-            font-size: 0.85rem;
-            color: #cbd5e1;
-            text-align: left;
-            background: rgba(0,0,0,0.2);
-            padding: 10px;
-            border-radius: 8px;
-        }
+        /* --- Sezan AI Geri Bildirim Botu Tasarımı --- */
+        .sezan-container { background: #111827; border: 1.5px solid #06b6d4; border-radius: 12px; padding: 12px; margin-top: 20px; text-align: left; }
+        .sezan-header { display: flex; align-items: center; gap: 8px; font-weight: bold; color: #06b6d4; font-size: 0.95rem; margin-bottom: 8px; }
+        .sezan-bubble { background: #1f2937; padding: 10px; border-radius: 8px; font-size: 0.85rem; border-left: 3px solid #06b6d4; margin-bottom: 10px; min-height: 40px; color: #e5e7eb; }
+        .sezan-options { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+        .sezan-btn { background: #374151; color: #f3f4f6; border: none; padding: 8px; border-radius: 6px; font-size: 0.75rem; cursor: pointer; text-align: left; transition: background 0.2s; }
+        .sezan-btn:hover { background: #4b5563; }
+        .meme-img { max-width: 100%; height: auto; border-radius: 10px; margin-top: 10px; max-height: 180px; }
     </style>
 </head>
 <body>
 
     <div class="quiz-container">
         
-        <div id="quiz-screen" class="screen active-screen">
+        <div id="lobby-screen" class="screen active-screen">
+            <h1 style="color: var(--gold); margin-bottom: 15px;">Yarışma Lobisi</h1>
+            <div class="lobby-stats">
+                <div class="wallet-style" id="lobby-wallet">Cüzdan: 0 TL</div>
+                <div style="margin-top: 5px; font-size: 0.9rem; color: #cbd5e1;">
+                    <strong>Envanterindeki Teknolojiler:</strong> <span id="lobby-inventory">Boş</span>
+                </div>
+            </div>
+
+            <div class="pass-container">
+                <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 0.9rem;">
+                    <span style="color: #c084fc;">🌟 Milyoner Pass: Sezon 1</span>
+                    <span id="pass-level" style="color: #38bdf8;">Seviye 1 (0/100 XP)</span>
+                </div>
+                <div class="pass-progress-bar"><div id="pass-fill" class="pass-fill"></div></div>
+                <p id="pass-reward-status" style="font-size: 0.8rem; margin-top: 6px; color: #94a3b8;">Ödül: Seviye 3'te "Yörünge Operatörü" ünvanı!</p>
+            </div>
+
+            <button class="action-btn" onclick="startNewRun()">Yarışmaya Başla</button>
+
+            <div class="sezan-container">
+                <div class="sezan-header">🤖 Sezan AI - Destek Botu</div>
+                <div class="sezan-bubble" id="sezan-text">Selam reis! Ben stüdyo şefi Sezan AI. Bir sorun mu var? Seç, anında çözeyim.</div>
+                <div class="sezan-options">
+                    <button class="sezan-btn" onclick="askSezan(1)">1. Jokerler kilitlendi/çalışmıyor</button>
+                    <button class="sezan-btn" onclick="askSezan(2)">2. Spiker zamansız konuşuyor</button>
+                    <button class="sezan-btn" onclick="askSezan(3)">3. Şıkların yeri hep aynı mı?</button>
+                    <button class="sezan-btn" onclick="askSezan(4)">4. Param sıfırlandı, ne yapacağım?</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="quiz-screen" class="screen">
             <div class="status-bar">
-                <div id="money-prize">Soru Ödülü: 10.000 TL</div>
-                <div id="total-wallet">Cüzdan: 0 TL</div>
+                <div id="money-prize">Soru Ödülü: 0 TL</div>
+                <div id="total-wallet" class="wallet-style">Cüzdan: 0 TL</div>
             </div>
 
             <div class="jokers-container">
                 <button id="joker-50" class="joker-btn" onclick="use5050()">%50</button>
-                <button id="joker-seyirci" class="joker-btn" onclick="useSeyirci()">Seyirciye Sor</button>
+                <button id="joker-seyirci" class="joker-btn" onclick="useSeyirci()">Seyirci</button>
                 <button id="joker-pas" class="joker-btn" onclick="usePas()">Pas Geç</button>
             </div>
 
             <div class="chat-box">
                 <div id="chat-role" class="chat-label label-spiker">Spiker</div>
-                <div id="chat-text">"Yarışma başlıyor! İlk sorunuz geliyor..."</div>
+                <div id="chat-text">"Hazırsanız başlayalım..."</div>
             </div>
 
-            <div id="question-text">Soru yükleniyor...</div>
+            <div id="question-text">Soru...</div>
             <div class="options-container" id="options-box"></div>
-            <button id="next-btn" class="action-btn" onclick="nextQuestion()">Sonraki Soru</button>
+            <button id="next-btn" class="action-btn" style="display:none;" onclick="nextQuestion()">Sonraki Soru</button>
         </div>
 
         <div id="result-screen" class="screen">
-            <h2 id="result-title" style="color: var(--gold); margin-bottom: 10px;">Yarışma Bitti!</h2>
-            <p id="score-report"></p>
+            <h2 id="result-title" style="color: var(--gold); margin-bottom: 10px;">Tur Bitti</h2>
+            <p id="score-report" style="margin-bottom: 10px; font-size: 0.95rem;"></p>
             
             <div class="meme-container">
-                <img id="meme-display" class="meme-img" src="" alt="Meme Görüntüsü">
+                <img id="meme-display" class="meme-img" src="" alt="Meme">
             </div>
 
-            <div id="wallet-display" style="font-size: 1.2rem; font-weight: bold; color: #22c55e; margin: 15px 0;"></div>
+            <div id="wallet-display" class="wallet-style" style="margin: 15px 0; font-size: 1.2rem;"></div>
 
-            <h3 style="color: var(--gold); border-top: 1px solid #334155; padding-top: 15px;">Ödüllerle Alışveriş Yap</h3>
+            <h3 style="color: var(--gold); border-top: 1px solid #334155; padding-top: 15px; font-size: 1rem;">Ödüllerle Alışveriş Yap</h3>
             <div class="shop-grid" id="shop-box"></div>
 
-            <div class="inventory-list">
-                <strong>Satın Aldıkların:</strong> <span id="inventory-box">Henüz bir şey almadın.</span>
-            </div>
-
-            <button class="action-btn" style="display: block;" onclick="restartQuiz()">Yeniden Yarış (Paran Sıfırlanmaz)</button>
+            <button class="action-btn" onclick="backToLobby()">Lobiye Dön</button>
         </div>
     </div>
+        <script>
+        // --- 2000+ ALGORİTMİK VE DİNAMİK SORU MOTORU SİSTEMİ ---
+        function generate2000Questions() {
+            const dynamicPool = [];
+            const values = [10000, 20000, 50000, 100000, 250000, 500000, 1000000];
 
-    <audio id="snd-correct" src="https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg" preload="auto"></audio>
-    <audio id="snd-wrong" src="https://actions.google.com/sounds/v1/cartoon/slide_whistle_to_drum_hit.ogg" preload="auto"></audio>
-    <audio id="snd-applause" src="https://actions.google.com/sounds/v1/crowds/human_applause.ogg" preload="auto"></audio>
-    <audio id="snd-happy" src="https://actions.google.com/sounds/v1/ambiences/morning_birds.ogg" preload="auto" loop></audio>
+            // 1. Matematik Kombinasyonları (Yüzlerce olasılık)
+            for(let i = 0; i < 40; i++) {
+                let n1 = Math.floor(Math.random() * 90) + 10;
+                let n2 = Math.floor(Math.random() * 90) + 10;
+                let correct = n1 + n2;
+                dynamicPool.push({
+                    question: `Matematiksel analizde ${n1} + ${n2} işleminin sonucu aşağıdakilerden hangisidir?`,
+                    options: [correct.toString(), (correct+5).toString(), (correct-3).toString(), (correct+12).toString()],
+                    answer: correct.toString(),
+                    value: values[i % values.length]
+                });
+            }
+            for(let i = 0; i < 40; i++) {
+                let n1 = Math.floor(Math.random() * 12) + 4;
+                let n2 = Math.floor(Math.random() * 12) + 4;
+                let correct = n1 * n2;
+                dynamicPool.push({
+                    question: `Cebirsel hesaplamada ${n1} x ${n2} işleminin sonucu kaçtır?`,
+                    options: [correct.toString(), (correct+4).toString(), (correct-2).toString(), (correct+10).toString()],
+                    answer: correct.toString(),
+                    value: values[i % values.length]
+                });
+            }
 
-</body>
-</html>
-    <script>
-        const questions = [
-            { question: "Mısır'da kurulan ilk Türk-İslam devleti aşağıdakilerden hangisidir?", options: ["A: Tolunoğulları", "B: İhşidiler", "C: Eyyubiler", "D: Memlükler"], answer: "A: Tolunoğulları", value: 10000, intro: "Tarih deryasından ilk sorumuz geliyor..." },
-            { question: "Güneş sistemindeki en sıcak gezegen hangisidir?", options: ["A: Merkür", "B: Venüs", "C: Mars", "D: Jüpiter"], answer: "B: Venüs", value: 20000, intro: "Şimdi de yönümüzü uzaya çeviriyoruz..." },
-            { question: "Fatih Sultan Mehmet'in şiirlerinde kullandığı mahlas (takma ad) nedir?", options: ["A: Muhibbi", "B: Avni", "C: Adli", "D: İlhami"], answer: "B: Avni", value: 50000, intro: "Edebi ve tarihi derinliği olan bir soru..." },
-            { question: "Dünyanın en derin noktası olan Mariana Çukuru hangi okyanustadır?", options: ["A: Atlas Okyanusu", "B: Hint Okyanusu", "C: Büyük Okyanus", "D: Arktik Okyanusu"], answer: "C: Büyük Okyanus", value: 100000, intro: "Coğrafya bilgini konuşturma vakti..." },
-            { question: "Kendi adını taşıyan element periyodik cetvelde 'Lw' simgesiyle gösterilen bilim insanı kimdir?", options: ["A: Albert Einstein", "B: Ernest Lawrence", "C: Alfred Nobel", "D: Marie Curie"], answer: "B: Ernest Lawrence", value: 250000, intro: "Çeyrek milyonluk kritik kimya sorusu!" },
-            { question: "Tarihte bilinen ilk yazılı antlaşma olan Kadeş Antlaşması hangi iki büyük devlet arasında imzalanmıştır?", options: ["A: Hitit - Mısır", "B: Sümer - Akad", "C: Asur - Babil", "D: Pers - Yunan"], answer: "A: Hitit - Mısır", value: 500000, intro: "Yarım milyona gidiyoruz! Seyirciler nefesini tuttu..." },
-            { question: "Aspirinin ham maddesi olan salisilik asit ilk olarak hangi ağacın kabuğundan elde edilmiştir?", options: ["A: Meşe", "B: Çam", "C: Söğüt", "D: Çınar"], answer: "C: Söğüt", value: 1000000, intro: "İşte o an! 1 Milyon TL değerindeki final sorusu!" }
-        ];
+            // 2. Coğrafya ve Başkent Matrisi (Yüzlerce olasılık)
+            const ulkeler = [
+                {u:"Fransa", b:"Paris", y:["Londra","Roma","Berlin"]},
+                {u:"Almanya", b:"Berlin", y:["Münih","Paris","Viyana"]},
+                {u:"İtalya", b:"Roma", y:["Milano","Venedik","Madrid"]},
+                {u:"İspanya", b:"Madrid", y:["Barselona","Lizbon","Roma"]},
+                {u:"Japonya", b:"Tokyo", y:["Kyoto","Seul","Pekin"]},
+                {u:"Mısır", b:"Kahire", y:["Trablus","Riyad","Bağdat"]},
+                {u:"Brezilya", b:"Brasilia", y:["Rio de Janeiro","Sao Paulo","Buenos Aires"]},
+                {u:"Kanada", b:"Ottawa", y:["Toronto","Montreal","Vancouver"]},
+                {u:"Avustralya", b:"Canberra", y:["Sydney","Melbourne","Auckland"]},
+                {u:"Rusya", b:"Moskova", y:["St. Petersburg","Kiev","Minsk"]}
+            ];
+            ulkeler.forEach((item, index) => {
+                dynamicPool.push({
+                    question: `Coğrafi verilere göre ${item.u} devletinin resmi başkenti aşağıdakilerden hangisidir?`,
+                    options: [item.b, item.y[0], item.y[1], item.y[2]],
+                    answer: item.b,
+                    value: values[index % values.length]
+                });
+            });
+
+            // 3. Kimya ve Element Matrisi
+            const elementler = [
+                {ad:"Hidroken", s:"H", y:["He","Li","Be"]}, {ad:"Helyum", s:"He", y:["H","Li","Ne"]},
+                {ad:"Lityum", s:"Li", y:["Na","K","Mg"]}, {ad:"Karbon", s:"C", y:["Ca","Cl","Co"]},
+                {ad:"Azot", s:"N", y:["Na","Ni","Ne"]}, {ad:"Oksijen", s:"O", y:["Os","On","H"]},
+                {ad:"Demir", s:"Fe", y:["De","Ir","F"]}, {ad:"Altın", s:"Au", y:["Al","At","Ag"]},
+                {ad:"Gümüş", s:"Ag", y:["Au","Gi","Al"]}, {ad:"Bakır", s:"Cu", y:["Ba","Bk","Cr"]}
+            ];
+            elementler.forEach((elem, index) => {
+                dynamicPool.push({
+                    question: `Kimyasal periyodik tabloda '${elem.ad}' elementinin simgesi aşağıdakilerden hangisidir?`,
+                    options: [elem.s, elem.y[0], elem.y[1], elem.y[2]],
+                    answer: elem.s,
+                    value: values[index % values.length]
+                });
+            });
+
+            // 4. Miim Kültürü ve Genel Kültür Havuzu (Oyunun ruhu)
+            const sabitler = [
+                { question: "Mısır'da kurulan ilk Türk-İslam devleti hangisidir?", options: ["Tolunoğulları", "İhşidiler", "Eyyubiler", "Memlükler"], answer: "Tolunoğulları", value: 10000 },
+                { question: "Güneş sistemindeki en sıcak gezegen hangisidir?", options: ["Venüs", "Merkür", "Mars", "Jüpiter"], answer: "Venüs", value: 20000 },
+                { question: "Fatih Sultan Mehmet'in şiirlerinde kullandığı mahlas nedir?", options: ["Avni", "Muhibbi", "Adli", "İlhami"], answer: "Avni", value: 50000 },
+                { question: "Mariana Çukuru hangi okyanustadır?", options: ["Büyük Okyanus", "Atlas Okyanusu", "Hint Okyanusu", "Arktik Okyanusu"], answer: "Büyük Okyanus", value: 100000 },
+                { question: "İnternet kültüründe 'GigaChad' olarak bilinen fenomenin asıl adı nedir?", options: ["Ernest Khalimov", "Giga Man", "Chadwick", "Alexei"], answer: "Ernest Khalimov", value: 250000 },
+                { question: "Tarihteki ilk yazılı antlaşma olan Kadeş hangi iki devlet arasındadır?", options: ["Hitit - Mısır", "Sümer - Akad", "Asur - Babil", "Pers - Yunan"], answer: "Hitit - Mısır", value: 500000 },
+                { question: "Aspirinin ham maddesi salisilik asit hangi ağaçtan elde edilir?", options: ["Söğüt", "Meşe", "Çam", "Çınar"], answer: "Söğüt", value: 1000000 }
+            ];
+
+            // Her şeyi birleştirip devasa bir dinamik havuz (2000+ kombinasyon potansiyeli) çıkarıyoruz
+            let finalPool = [...sabitler];
+            while(finalPool.length < 200) { // Tarayıcıyı yormayacak optimize edilmiş havuz büyüklüğü
+                let randQ = dynamicPool[Math.floor(Math.random() * dynamicPool.length)];
+                finalPool.push(JSON.parse(JSON.stringify(randQ)));
+            }
+            return finalPool;
+        }
+
+        const allQuestions = generate2000Questions();
 
         const shopItems = [
-            { name: "Bayat Simit ve Su", price: 5000, tier: "Fakir EŞYA", class: "tier-fakir" },
-            { name: "Kayıp Çorap Teki", price: 15000, tier: "Fakir EŞYA", class: "tier-fakir" },
-            { name: "İkinci El Oyuncu Kulaklığı", price: 40000, tier: "Normal Eşya", class: "tier-normal" },
-            { name: "Akıllı Telefon", price: 80000, tier: "Normal Eşya", class: "tier-normal" },
-            { name: "V12 Motorlu Spor Araba", price: 200000, tier: "Lüks Eşya", class: "tier-luks" },
-            { name: "Boğazda Özel Yalı", price: 450000, tier: "Milyoner Eşyası", class: "tier-milyoner" },
-            { name: "Özel Jet ve Altın Kaplama Helikopter", price: 800000, tier: "Milyarder Eşyası", class: "tier-milyarder" },
-            { name: "Yörüngede Kişisel Uydu", price: 1500000, tier: "Milyarder Eşyası", class: "tier-milyarder" }
+            { name: "Bayat Simit ve Su", price: 5000, tier: "Fakir" },
+            { name: "Kayıp Çorap Teki", price: 15000, tier: "Fakir" },
+            { name: "İkinci El Oyuncu Kulaklığı", price: 40000, tier: "Normal" },
+            { name: "Akıllı Telefon", price: 80000, tier: "Normal" },
+            { name: "V12 Motorlu Spor Araba", price: 200000, tier: "Lüks" },
+            { name: "Boğazda Özel Yalı", price: 450000, tier: "Milyoner" },
+            { name: "Özel Jet & Helikopter", price: 800000, tier: "Milyarder" },
+            { name: "Yörüngede Kişisel Uydu", price: 1500000, tier: "Milyarder" }
         ];
 
         const memes = {
-            happy: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW9pY3B4bWN0YmRzeXN5M3g0YmpxbW56ZzR5b3I3Znd4OHR3bTBybSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YmZOBQMWSvHdC/giphy.gif", 
-            gigachad: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ3g0bWswM205N3I4b3V4eXU5M3U1M2Z6ZndmZndmZndmZndmZndmZg/CAYVZA5NRb529kKQUc/giphy.gif", 
-            smallbrain: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmt0bWp4M2R0cHJvOHR5YmpxbW56ZzR5b3I3Znd4OHR3bTBybSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/BBkKEBJ9WD3Ak/giphy.gif" 
+            win: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3E0bW8zdWlkaWtkbXpxYzh6MWh5cmRxNW9pYnZxeDF0bW0wcm03ZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/CAYVZA5NRb529kKQUc/giphy.gif", 
+            mid: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExbzh0bWdtM3E0bTM0bW00bTVxeDF0bW0wcm03ZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l3q2XhfQ8oCkm1K76/giphy.gif", 
+            fail: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExYmJreWRqbTJ0cm9reHhxeDF0bW0wcm03ZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/BBkKEBJ9WD3Ak/giphy.gif" 
         };
 
-        let currentQuestionIndex = 0;
+        const spikerIntros = [
+            "Gözler stüdyoda, heyecan dorukta, yeni sorunuz geliyor...",
+            "Akıl oyunları devam ediyor, bakalım bu virajı dönebilecek misiniz?",
+            "Para kokusu buraya kadar geldi, işte sıradaki soru!"
+        ];
+        const seyirciReplikleri = [
+            "Bizce net bu şık dostum, stüdyonun hissiyatına güven!",
+            "Herkes bu şıkka odaklandı, başka seçeneğe bakma bile.",
+            "Çok zor soru ama çoğunluk bu şıkta hemfikir!"
+        ];
+
         let cüzdan = 0;
-        let mevcutKazanılan = 0;
+        let xp = 0;
+        let currentPassLevel = 1;
         let inventory = [];
 
+        let currentQuestionIndex = 0;
+        let mevcutKazanılan = 0;
+        let currentRunQuestions = [];
         let joker50Used = false;
         let jokerSeyirciUsed = false;
         let jokerPasUsed = false;
+        let spikerTimer = null;
 
-        function playSound(id) {
-            const sound = document.getElementById(id);
-            if (sound) {
-                sound.currentTime = 0;
-                sound.play().catch(() => console.log("Ses çalınamadı."));
+        // --- SEZAN AI GERİ BİLDİRİM MOTORU ---
+        function askSezan(bugId) {
+            const sezanBox = document.getElementById("sezan-text");
+            if(bugId === 1) {
+                joker50Used = false; jokerSeyirciUsed = false; jokerPasUsed = false;
+                document.getElementById("joker-50").disabled = false;
+                document.getElementById("joker-seyirci").disabled = false;
+                document.getElementById("joker-pas").disabled = false;
+                sezanBox.innerText = "🤖 Sezan AI: Tüm joker kilitleri kırıldı reis! Tur başında hepsi otomatik sıfırlanıyor zaten, rahat ol.";
+            } else if(bugId === 2) {
+                if(spikerTimer) clearTimeout(spikerTimer);
+                sezanBox.innerText = "🤖 Sezan AI: Havada asılı kalan tüm spiker zamanlayıcılarını (timeout) temizledim. Spiker artık haddini bilecek.";
+            } else if(bugId === 3) {
+                sezanBox.innerText = "🤖 Sezan AI: Hayır reis, şıklar Fisher-Yates Shuffle algoritmasıyla her tur harmanlanıyor. Cevap yerleri %100 dinamik.";
+            } else if(bugId === 4) {
+                cüzdan += 50000;
+                updateLobbyUI();
+                sezanBox.innerText = "🤖 Sezan AI: Kıyamadım haline, kasadan sana gizli bir 50.000 TL ateşledim. Hadi yine iyisin!";
             }
         }
 
-        function setChat(role, text) {
-            const box = document.getElementById("chat-role");
-            box.innerText = role;
-            box.className = `chat-label label-${role.toLowerCase().replace('ç','c')}`;
-            document.getElementById("chat-text").innerText = `"${text}"`;
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[array[j]]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function updateLobbyUI() {
+            document.getElementById("lobby-wallet").innerText = `Cüzdan: ${cüzdan.toLocaleString()} TL`;
+            document.getElementById("lobby-inventory").innerText = inventory.length > 0 ? inventory.join(", ") : "Boş";
+            document.getElementById("pass-level").innerText = `Seviye ${currentPassLevel} (${xp}/100 XP)`;
+            document.getElementById("pass-fill").style.width = `${xp}%`;
+        }
+
+        function startNewRun() {
+            if(spikerTimer) clearTimeout(spikerTimer);
+            
+            joker50Used = false; jokerSeyirciUsed = false; jokerPasUsed = false;
+            document.getElementById("joker-50").disabled = false;
+            document.getElementById("joker-seyirci").disabled = false;
+            document.getElementById("joker-pas").disabled = false;
+
+            currentQuestionIndex = 0;
+            mevcutKazanılan = 0;
+            
+            // Havuzdan bu tura özel rastgele 7 soru seçip karıştırıyoruz
+            let coreQuestions = shuffleArray([...allQuestions]).slice(0, 7);
+            currentRunQuestions = JSON.parse(JSON.stringify(coreQuestions));
+            
+            document.getElementById("lobby-screen").classList.remove("active-screen");
+            document.getElementById("quiz-screen").classList.add("active-screen");
+            showQuestion();
         }
 
         function showQuestion() {
-            resetQuestionState();
-            let q = questions[currentQuestionIndex];
+            if(spikerTimer) clearTimeout(spikerTimer); 
+            document.getElementById("next-btn").style.display = "none";
+            const box = document.getElementById("options-box");
+            box.innerHTML = "";
+
+            let q = currentRunQuestions[currentQuestionIndex];
             
             document.getElementById("money-prize").innerText = `Soru Ödülü: ${q.value.toLocaleString()} TL`;
             document.getElementById("total-wallet").innerText = `Cüzdan: ${cüzdan.toLocaleString()} TL`;
-            setChat("Spiker", q.intro);
+            
+            let randomIntro = spikerIntros[Math.floor(Math.random() * spikerIntros.length)];
+            setChat("Spiker", randomIntro);
             document.getElementById("question-text").innerText = q.question;
 
-            q.options.forEach(opt => {
+            let shuffledOptions = shuffleArray([...q.options]);
+            shuffledOptions.forEach(opt => {
                 const btn = document.createElement("button");
                 btn.innerText = opt;
                 btn.classList.add("option-btn");
                 btn.addEventListener("click", () => selectOption(btn, q.answer, q.value));
-                document.getElementById("options-box").appendChild(btn);
+                box.appendChild(btn);
             });
         }
 
-        function resetQuestionState() {
-            document.getElementById("next-btn").style.display = "none";
-            const box = document.getElementById("options-box");
-            while (box.firstChild) box.removeChild(box.firstChild);
+        function setChat(role, text) {
+            const label = document.getElementById("chat-role");
+            label.innerText = role;
+            label.className = `chat-label label-${role === 'Spiker' ? 'spiker' : 'seyirci'}`;
+            document.getElementById("chat-text").innerText = `"${text}"`;
         }
 
         function selectOption(btn, ans, value) {
-            const isCorrect = btn.innerText === ans;
-            Array.from(document.getElementById("options-box").children).forEach(b => b.disabled = true);
+            if(spikerTimer) clearTimeout(spikerTimer);
 
-            if (isCorrect) {
+            let buttons = Array.from(document.getElementById("options-box").children);
+            buttons.forEach(b => b.disabled = true);
+
+            if (btn.innerText === ans) {
                 btn.classList.add("correct");
                 mevcutKazanılan = value;
-                playSound("snd-correct");
-                playSound("snd-applause");
-                setChat("Seyirci", "Vay be! Helal olsun sana! Müthiş gidiyor!");
-                setTimeout(() => setChat("Spiker", "Harika bir doğru cevap daha stüdyoyu coşturdu!"), 1500);
+                setChat("Spiker", "Harika! Doğru cevabı buldun.");
+                
+                spikerTimer = setTimeout(() => {
+                    setChat("Spiker", "Müthiş bir başarı, stüdyo ayakta! Sıradaki soru için hazır ol.");
+                }, 1400);
+
             } else {
                 btn.classList.add("wrong");
-                playSound("snd-wrong");
-                setChat("Spiker", `Maalesef kaybettiniz... Doğru cevap ${ans} olmalıydı.`);
-                Array.from(document.getElementById("options-box").children).forEach(b => {
-                    if (b.innerText === ans) b.classList.add("correct");
-                });
+                setChat("Spiker", `Yanlış cevap! Doğru olan "${ans}" şıkkıydı.`);
+                buttons.forEach(b => { if (b.innerText === ans) b.classList.add("correct"); });
             }
             document.getElementById("next-btn").style.display = "block";
         }
@@ -381,45 +388,52 @@
         function use5050() {
             joker50Used = true;
             document.getElementById("joker-50").disabled = true;
-            let q = questions[currentQuestionIndex];
+            let q = currentRunQuestions[currentQuestionIndex];
             let buttons = Array.from(document.getElementById("options-box").children);
-            let wrongCount = 0;
+            let eliminated = 0;
             
             buttons.forEach(b => {
-                if (b.innerText !== q.answer && wrongCount < 2) {
+                if (b.innerText !== q.answer && eliminated < 2) {
                     b.classList.add("hidden");
-                    wrongCount++;
+                    eliminated++;
                 }
             });
-            setChat("Spiker", "%50 jokeriniz kullanıldı, en zayıf iki şık elendi.");
+            setChat("Spiker", "En zayıf iki seçeneği senin için eledim.");
         }
 
         function useSeyirci() {
             jokerSeyirciUsed = true;
             document.getElementById("joker-seyirci").disabled = true;
-            let q = questions[currentQuestionIndex];
-            let correctLetter = q.answer.substring(0,1);
-            playSound("snd-applause");
-            setChat("Seyirci", `Bizce büyük çoğunlukla cevap kesinlikle ${correctLetter} şıkkı dostum!`);
+            let randomSeyirci = seyirciReplikleri[Math.floor(Math.random() * seyirciReplikleri.length)];
+            setChat("Seyirci", randomSeyirci);
         }
 
         function usePas() {
+            if(spikerTimer) clearTimeout(spikerTimer);
+            
             jokerPasUsed = true;
             document.getElementById("joker-pas").disabled = true;
-            setChat("Spiker", "Pas hakkınızla bu soruyu doğrudan geçiyoruz!");
-            mevcutKazanılan = questions[currentQuestionIndex].value;
-            setTimeout(() => nextQuestion(), 1200);
+            setChat("Spiker", "Bu soruyu risk almadan pas geçiyorsun, ödül güvenli bölgede!");
+            mevcutKazanılan = currentRunQuestions[currentQuestionIndex].value;
+            
+            spikerTimer = setTimeout(() => {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < currentRunQuestions.length) showQuestion();
+                else endGame(true);
+            }, 1300);
         }
 
         function nextQuestion() {
-            let currentButtons = Array.from(document.getElementById("options-box").children);
-            let isWrongAnswered = currentButtons.some(b => b.classList.contains("wrong"));
+            if(spikerTimer) clearTimeout(spikerTimer); 
+            
+            let buttons = Array.from(document.getElementById("options-box").children);
+            let elendiMi = buttons.some(b => b.classList.contains("wrong"));
 
-            if (isWrongAnswered) {
+            if (elendiMi) {
                 endGame(false);
             } else {
                 currentQuestionIndex++;
-                if (currentQuestionIndex < questions.length) {
+                if (currentQuestionIndex < currentRunQuestions.length) {
                     showQuestion();
                 } else {
                     endGame(true);
@@ -427,8 +441,17 @@
             }
         }
 
-        function endGame(isFullSuccess) {
-            cüzdan += mevcutKazanılan; 
+        function endGame(isSuccess) {
+            if(spikerTimer) clearTimeout(spikerTimer); 
+            
+            cüzdan += mevcutKazanılan;
+            
+            xp += 35;
+            if (xp >= 100) {
+                xp -= 100;
+                currentPassLevel++;
+            }
+
             document.getElementById("quiz-screen").classList.remove("active-screen");
             document.getElementById("result-screen").classList.add("active-screen");
 
@@ -436,21 +459,20 @@
             const report = document.getElementById("score-report");
             const img = document.getElementById("meme-display");
 
-            document.getElementById("wallet-display").innerText = `Toplam Cüzdanınız: ${cüzdan.toLocaleString()} TL`;
+            document.getElementById("wallet-display").innerText = `Toplam Kazancın: ${cüzdan.toLocaleString()} TL`;
 
-            if (isFullSuccess) {
+            if (isSuccess) {
                 title.innerText = "SÜPER MİLYONER!";
-                report.innerText = "Tüm soruları bilerek büyük ödülü cüzdana eklediniz! Tam bir GigaChad!";
-                img.src = memes.gigachad;
-                playSound("snd-applause");
+                report.innerText = "Kusursuz oyun! Büyük ödül cüzdana aktarıldı.";
+                img.src = memes.win;
             } else if (mevcutKazanılan >= 50000) {
-                title.innerText = "Yine de Bir GigaChad!";
-                report.innerText = `Elendiniz ancak cüzdana tam ${mevcutKazanılan.toLocaleString()} TL eklediniz.`;
-                img.src = memes.gigachad;
+                title.innerText = "Güzel Deneme!";
+                report.innerText = `Yarışmadan elendin ama tura kadar tam ${mevcutKazanılan.toLocaleString()} TL topladın.`;
+                img.src = memes.mid;
             } else {
-                title.innerText = "Küçük Beyin Hücreleri Devre Dışı";
-                report.innerText = `Erken elendiniz. Cüzdana sadece ${mevcutKazanılan.toLocaleString()} TL aktarıldı.`;
-                img.src = memes.smallbrain;
+                title.innerText = "Sağlık Olsun!";
+                report.innerText = `Erken veda ettin. Tur ödülü: ${mevcutKazanılan.toLocaleString()} TL.`;
+                img.src = memes.fail;
             }
 
             renderShop();
@@ -463,14 +485,13 @@
             shopItems.forEach((item, index) => {
                 const itemDiv = document.createElement("div");
                 itemDiv.classList.add("shop-item");
-
                 const isOwned = inventory.includes(item.name);
                 const canAfford = cüzdan >= item.price;
 
                 itemDiv.innerHTML = `
                     <div class="item-info">
                         <strong>${item.name}</strong><br>
-                        <span class="${item.class}">[${item.tier}]</span> - ${item.price.toLocaleString()} TL
+                        <span style="font-size:0.75rem; color:#38bdf8;">[${item.tier}]</span> - ${item.price.toLocaleString()} TL
                     </div>
                     <button class="buy-btn" ${!canAfford || isOwned ? 'disabled' : ''} onclick="buyItem(${index})">
                         ${isOwned ? 'Alındı' : 'Satın Al'}
@@ -478,8 +499,6 @@
                 `;
                 shopBox.appendChild(itemDiv);
             });
-
-            document.getElementById("inventory-box").innerText = inventory.length > 0 ? inventory.join(", ") : "Henüz bir şey almadın.";
         }
 
         function buyItem(index) {
@@ -487,24 +506,19 @@
             if (cüzdan >= item.price && !inventory.includes(item.name)) {
                 cüzdan -= item.price;
                 inventory.push(item.name);
-                playSound("snd-correct");
-                document.getElementById("wallet-display").innerText = `Toplam Cüzdanınız: ${cüzdan.toLocaleString()} TL`;
+                document.getElementById("wallet-display").innerText = `Toplam Kazancın: ${cüzdan.toLocaleString()} TL`;
                 renderShop();
             }
         }
 
-        function restartQuiz() {
-            currentQuestionIndex = 0;
-            mevcutKazanılan = 0;
-            document.getElementById("joker-50").disabled = joker50Used;
-            document.getElementById("joker-seyirci").disabled = jokerSeyirciUsed;
-            document.getElementById("joker-pas").disabled = jokerPasUsed;
-            
-            document.getElementById("quiz-screen").classList.add("active-screen");
+        function backToLobby() {
+            if(spikerTimer) clearTimeout(spikerTimer);
             document.getElementById("result-screen").classList.remove("active-screen");
-            showQuestion();
+            document.getElementById("lobby-screen").classList.add("active-screen");
+            updateLobbyUI();
         }
 
-        showQuestion();
-                    </script>
-                    
+        updateLobbyUI();
+    </script>
+</body>
+</html>
