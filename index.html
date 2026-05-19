@@ -2,329 +2,307 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
-    <title>Milyoner Mobile Native Pro v6.5</title>
-    <style>
-        :root {
-            --bg-main: #020617;
-            --bg-card: #0f172a;
-            --text-main: #f8fafc;
-            --text-blue: #38bdf8;
-            --correct: #10b981;
-            --wrong: #ef4444;
-            --gold: #eab308;
-            --joker: #1e293b;
-            --neon: #06b6d4;
-        }
-
-        * { 
-            box-sizing: border-box; 
-            margin: 0; 
-            padding: 0; 
-            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-            user-select: none;
-            -webkit-user-select: none;
-            -webkit-tap-highlight-color: transparent; 
-        }
-
-        body { 
-            background-color: var(--bg-main); 
-            color: var(--text-main); 
-            min-height: 100vh; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            padding: 10px;
-            background-image: radial-gradient(circle at 50% 50%, #1e1b4b 0%, #020617 100%);
-        }
-
-        .app-container { 
-            background-color: var(--bg-card); 
-            width: 100%; 
-            max-width: 450px; 
-            border-radius: 16px; 
-            padding: 18px; 
-            border: 2px solid #1e293b; 
-            text-align: center;
-            box-shadow: 0 0 25px rgba(6, 182, 212, 0.15);
-        }
-        
-        .status-panel { 
-            display: flex; 
-            justify-content: space-between; 
-            padding: 12px; 
-            background: #0f172a; 
-            border-radius: 10px; 
-            border: 1px solid #334155;
-            margin-bottom: 12px;
-        }
-
-        .joker-box { display: flex; gap: 8px; margin-bottom: 12px; }
-        .joker-btn { flex: 1; background: var(--joker); color: white; border: 2px solid var(--text-blue); padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; }
-        .joker-btn:disabled { opacity: 0.25; text-decoration: line-through; }
-
-        .chat-display { background: #090d16; border: 1px solid #334155; padding: 12px; border-radius: 10px; text-align: left; min-height: 65px; margin-bottom: 12px; }
-        .chat-tag { font-weight: bold; font-size: 0.75rem; color: var(--gold); text-transform: uppercase; letter-spacing: 0.5px; }
-        #chat-dialogue { font-style: italic; font-size: 0.9rem; margin-top: 4px; color: #cbd5e1; }
-
-        .q-text { font-size: 1.15rem; font-weight: bold; text-align: left; margin: 15px 0; min-height: 55px; line-height: 1.4; color: #f1f5f9; }
-        .options-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
-        
-        .opt-btn { background: #1e293b; color: white; border: 2px solid #334155; padding: 14px; border-radius: 12px; font-size: 0.95rem; text-align: left; font-weight: 600; cursor: pointer; }
-        .opt-btn.correct { background: var(--correct) !important; border-color: #059669 !important; color: white !important; }
-        .opt-btn.wrong { background: var(--wrong) !important; border-color: #dc2626 !important; color: white !important; }
-        .opt-btn.hidden { opacity: 0.03; pointer-events: none; }
-
-        .main-btn { background: linear-gradient(135deg, var(--gold), #ca8a04); color: black; border: none; padding: 14px; border-radius: 12px; font-size: 1rem; font-weight: bold; cursor: pointer; width: 100%; margin-top: 12px; text-transform: uppercase; }
-
-        .sezan-panel { background: #090d16; border: 2px solid var(--neon); border-radius: 12px; padding: 12px; margin-top: 15px; text-align: left; }
-        .sezan-title { font-weight: bold; color: var(--neon); font-size: 0.85rem; margin-bottom: 6px; text-transform: uppercase; }
-        .sezan-text { background: #151f32; padding: 8px; border-radius: 6px; font-size: 0.8rem; border-left: 3px solid var(--neon); color: #cbd5e1; margin-bottom: 8px; line-height: 1.3; }
-        .sezan-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-        .btn-sezan { background: #223147; color: #f3f4f6; border: 1px solid #334155; padding: 8px; border-radius: 6px; font-size: 0.7rem; font-weight: bold; cursor: pointer; }
-        .btn-sezan.vip { background: linear-gradient(90deg, var(--neon), #a855f7); color: #fff; border: none; }
-
-        .view { display: none; }
-        .active-view { display: block; animation: viewFade 0.2s ease-in-out; }
-        @keyframes viewFade { from { opacity: 0; } to { opacity: 1; } }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mega Bilgi Yarışması</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <div class="app-container">
+    <!-- GİRİŞ VE AVATAR MAĞAZASI EKRANI -->
+    <div id="login-screen" class="card">
+        <h1>BİLGİ YARIŞMASI</h1>
+        <p class="subtitle">Lobi yok, sıra beklemek yok. Doğrudan aksiyon!</p>
         
-        <div id="view-lobby" class="view active-view">
-            <h2 style="color: var(--gold); margin-bottom: 15px; font-weight: 900; letter-spacing: 1px;">MİLYONER MOBİL</h2>
-            <div style="background: #1e293b; padding: 15px; border-radius: 12px; text-align: left; margin-bottom: 15px; border: 1px solid #334155;">
-                <div style="color: #22c55e; font-weight: bold; font-size: 1.1rem;" id="lobby-money">Cüzdan: 0 TL</div>
-                <div style="font-size: 0.8rem; margin-top: 6px; color: #cbd5e1;">Motor Altyapısı: <span style="color: var(--text-blue); font-weight: bold;">Korumalı Native APK</span></div>
-            </div>
-            
-            <button class="main-btn" onclick="startGame()">YARIŞMAYI BAŞLAT</button>
+        <input type="text" id="username-input" placeholder="Kullanıcı Adınızı Girin...">
 
-            <div class="sezan-panel">
-                <div class="sezan-title">🤖 SEZAN AI — Altyapı Amiri</div>
-                <div class="sezan-text" id="sezan-status">Sistem kararlı şef. Kod optimizasyonu tamamlandı, tüm bellek sızıntıları ve hile kapıları kapatıldı!</div>
-                <div class="sezan-grid">
-                    <button class="btn-sezan vip" onclick="askSezan(4)">👑 50.000 TL Teşvik Al</button>
-                    <button class="btn-sezan" onclick="askSezan(2)">🎙️ Ses Sinyalini Resetle</button>
-                    <button class="btn-sezan" onclick="askSezan(1)">🛠️ Joker Kilitlerini Kır</button>
-                    <button class="btn-sezan" onclick="askSezan(3)">⚙️ Donanım Sağlık Testi</button>
-                </div>
-            </div>
+        <h3>Premium Avatar Mağazası (Sana Özel Tamamı Ücretsiz!)</h3>
+        <div id="avatar-shop" class="avatar-grid">
+            <!-- Avatarlar JavaScript ile dinamik yüklenecek -->
         </div>
 
-        <div id="view-game" class="view">
-            <div class="status-panel">
-                <div id="txt-prize" style="color: var(--gold); font-weight: bold;">Soru: 0 TL</div>
-                <div id="txt-wallet" style="color: #22c55e; font-weight: bold;">0 TL</div>
-            </div>
-
-            <div class="joker-box">
-                <button id="j-50" class="joker-btn" onclick="btn5050()">%50</button>
-                <button id="j-sey" class="joker-btn" onclick="btnSeyirci()">Seyirci</button>
-            </div>
-
-            <div class="chat-display">
-                <span class="chat-tag" id="chat-actor">Spiker Sinyali</span>
-                <div id="chat-dialogue">"Ses kanalları aktif edildi. İlk soru yükleniyor..."</div>
-            </div>
-
-            <div id="txt-question" class="q-text">Soru veritabanından çağrılıyor...</div>
-            <div class="options-grid" id="box-options"></div>
-            <button id="btn-next" class="main-btn" style="display:none;" onclick="nextStep()">Sonraki Soru</button>
-        </div>
-
+        <button id="start-btn" disabled>Oyunu Başlat</button>
     </div>
 
-    <script>
-        // CRASH KORUMALI SABİT SORU HAVUZU
-        const qaBank = [
-            { q: "Mısır'da kurulan ilk Türk-İslam devleti aşağıdakilerden hangisidir?", o: ["Tolunoğulları", "İhşidiler", "Eyyubiler", "Memlükler"], a: "Tolunoğulları", v: 50000 },
-            { q: "Güneş sistemindeki yoğun atmosferi sebebiyle en sıcak gezegen hangisidir?", o: ["Venüs", "Merkür", "Mars", "Jüpiter"], a: "Venüs", v: 100000 },
-            { q: "Osmanlı İmparatorluğu'nda Fatih Sultan Mehmet'in şiirlerinde kullandığı mahlas nedir?", o: ["Avni", "Muhibbi", "Adli", "İlhami"], a: "Avni", v: 250000 },
-            { q: "Dünyanın en derin noktası Mariana Çukuru hangi okyanus sınırları içerisindedir?", o: ["Büyük Okyanus", "Atlas Okyanusu", "Hint Okyanusu", "Arktik Okyanusu"], a: "Büyük Okyanus", v: 500000 },
-            { q: "Tıpta ağrı kesici aspirin ham maddesi olan salisilik asit hangi ağaçtan elde edilir?", o: ["Söğüt", "Meşe", "Çam", "Çınar"], a: "Söğüt", v: 1000000 }
-        ];
+    <!-- OYUN ALANI -->
+    <div id="game-screen" class="card hidden">
+        <div class="game-header">
+            <div class="player-info">
+                <img id="current-avatar" src="" alt="Avatar">
+                <span id="display-name">Oyuncu</span>
+            </div>
+            <div id="score-board">Skor: <span id="score">0</span></div>
+        </div>
 
-        let wallet = 0;
-        let currentQIndex = 0;
-        let currentPrize = 0;
-        let garantiPara = 0; 
-        let sezanHakkıKullanıldı = false; 
+        <hr>
 
-        // MOBİL SES MOTORU (Asenkron kuyruk temizleme korumalı)
-        function speak(text) {
-            if ('speechSynthesis' in window) {
-                try {
-                    window.speechSynthesis.cancel(); 
-                    setTimeout(() => {
-                        let utterance = new SpeechSynthesisUtterance(text);
-                        utterance.lang = 'tr-TR';
-                        utterance.rate = 1.1;
-                        utterance.pitch = 1.0;
-                        window.speechSynthesis.speak(utterance);
-                    }, 50);
-                } catch (e) {
-                    console.error("Ses sentezleme hatası:", e);
-                }
-            }
-        }
+        <div id="question-container">
+            <p id="question-text">Soru buraya gelecek...</p>
+            <div id="options-container" class="options-grid">
+                <!-- Seçenekler dynamic gelecek -->
+            </div>
+        </div>
 
-        function changeView(viewId) {
-            document.querySelectorAll('.view').forEach(v => v.classList.remove('active-view'));
-            document.getElementById(viewId).classList.add('active-view');
-        }
+        <div id="feedback" class="hidden"></div>
+        <button id="next-btn" class="hidden">Sonraki Soru</button>
+    </div>
 
-        function startGame() {
-            currentQIndex = 0;
-            currentPrize = 0;
-            garantiPara = 0; 
-            sezanHakkıKullanıldı = false; // Her yeni oyunda hile kontrolü sıfırlanır
-            document.getElementById("j-50").disabled = false;
-            document.getElementById("j-sey").disabled = false;
-            document.getElementById("chat-display").style.borderColor = "#334155";
-            changeView("view-game");
-            loadQuestion();
-        }
-
-        function loadQuestion() {
-            document.getElementById("btn-next").style.display = "none";
-            let grid = document.getElementById("box-options");
-            grid.innerHTML = ""; // Eski elementleri ve eventleri bellekten temizle
-
-            let data = qaBank[currentQIndex];
-            document.getElementById("txt-prize").innerText = `Ödül: ${data.v.toLocaleString()} TL`;
-            document.getElementById("txt-wallet").innerText = `Cüzdan: ${wallet.toLocaleString()} TL`;
-            document.getElementById("txt-question").innerText = data.q;
-            document.getElementById("chat-actor").innerText = "Spiker Sinyali";
-            document.getElementById("chat-dialogue").innerText = `"Evet şef, sorun ekranda. Dikkatli odaklan."`;
-            
-            speak(data.q);
-
-            let shuffled = [...data.o].sort(() => Math.random() - 0.5);
-            shuffled.forEach(opt => {
-                let btn = document.createElement("button");
-                btn.className = "opt-btn";
-                btn.innerText = opt;
-                btn.onclick = function() { selectOpt(btn, data.a, data.v); };
-                grid.appendChild(btn);
-            });
-        }
-
-        function selectOpt(selectedBtn, correctAns, value) {
-            let buttons = document.querySelectorAll(".opt-btn");
-            buttons.forEach(b => {
-                b.disabled = true;
-                b.onclick = null; // Bellek sızıntısı engelleyici (Garbage Collector tetikleme)
-            });
-
-            if(selectedBtn.innerText === correctAns) {
-                selectedBtn.classList.add("correct");
-                currentPrize = value; 
-                
-                // Baraj Para Akış Sistemi
-                if(currentQIndex >= 1) { 
-                    garantiPara = value; 
-                }
-
-                document.getElementById("chat-dialogue").innerText = `"Harika! Doğru cevabı verdin!"`;
-                speak("Tebrikler, doğru cevap!");
-            } else {
-                selectedBtn.classList.add("wrong");
-                currentPrize = 0; // Elendiği an o sorunun parası uçurulur
-
-                buttons.forEach(b => {
-                    if(b.innerText === correctAns) b.classList.add("correct");
-                });
-                document.getElementById("chat-display").style.borderColor = "var(--wrong)";
-                document.getElementById("chat-dialogue").innerText = `"Maalesef yanlış cevap. Doğru cevap: ${correctAns}"`;
-                speak("Maalesef yanlış cevap verdiniz.");
-            }
-            document.getElementById("btn-next").style.display = "block";
-        }
-
-        function nextStep() {
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel(); // Yeni ekrana geçmeden önce zorla sustur
-            }
-
-            let isWrong = document.querySelector(".opt-btn.wrong");
-            
-            if(isWrong) {
-                wallet += garantiPara; // Sadece kazanılmış ve garantilenmiş para eklenir
-                alert(`Oyun Bitti! Elendiniz. Kazancınız: ${garantiPara.toLocaleString()} TL`);
-                document.getElementById("lobby-money").innerText = `Cüzdan: ${wallet.toLocaleString()} TL`;
-                changeView("view-lobby");
-            } else {
-                currentQIndex++;
-                if(currentQIndex < qaBank.length) {
-                    loadQuestion();
-                } else {
-                    wallet += currentPrize; // Büyük ödül cüzdana eklenir
-                    alert(`TEBRİKLER! Tüm soruları bildiniz ve Milyoner oldunuz! Ödül: ${currentPrize.toLocaleString()} TL`);
-                    document.getElementById("lobby-money").innerText = `Cüzdan: ${wallet.toLocaleString()} TL`;
-                    changeView("view-lobby");
-                }
-            }
-        }
-
-        function btn5050() {
-            document.getElementById("j-50").disabled = true;
-            let data = qaBank[currentQIndex];
-            let buttons = document.querySelectorAll(".opt-btn");
-            let count = 0;
-            buttons.forEach(b => {
-                if(b.innerText !== data.a && count < 2) {
-                    b.classList.add("hidden");
-                    count++;
-                }
-            });
-        }
-
-        function btnSinger() { // Eşleşme uyumu için buton tetikleyici
-            btnSeyirci();
-        }
-
-        function btnSeyirci() {
-            document.getElementById("j-sey").disabled = true;
-            let data = qaBank[currentQIndex];
-            document.getElementById("chat-actor").innerText = "Seyirci Sinyali";
-            document.getElementById("chat-dialogue").innerText = `"Seyircilerimizin ezici bir çoğunluğu '${data.a}' şıkkını işaret ediyor şef."`;
-            speak(`Seyirciye göre doğru cevap büyük ihtimalle ${data.a}`);
-        }
-
-        // SEZAN AI EKONOMİK VE TEKNİK DENETİM MOTORU
-        function askSezan(bugId) {
-            const sezanBox = document.getElementById("sezan-status");
-            if(!sezanBox) return;
-
-            if(bugId === 1) {
-                document.getElementById("j-50").disabled = false;
-                document.getElementById("j-sey").disabled = false;
-                sezanBox.innerText = "🤖 Sezan AI: Tüm joker kilitleri kırıldı kral, hepsi aktif!";
-            } else if(bugId === 2) {
-                if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-                speak("Ses kanalları sıfırlandı şef.");
-                sezanBox.innerText = "🤖 Sezan AI: Spiker kanalları temizlendi ve ID köprüsü kuruldu.";
-            } else if(bugId === 3) {
-                sezanBox.innerText = "🤖 Sezan AI: Donanım ivmelendirici test edildi. Performans %100.";
-            } else if(bugId === 4) {
-                // Sınırsız para basma açığını (exploit) engelleyen güvenlik duvarı
-                if (sezanHakkıKullanıldı) {
-                    sezanBox.innerText = "🤖 Sezan AI: Hop dedik imparator! 50k teşvik hakkını zaten kullandın. Stüdyoyu mu batıracaksın?";
-                    speak("Daha fazla para yok reis, bütçeyi kuruttun.");
-                    return; 
-                }
-
-                wallet += 50000;
-                sezanHakkıKullanıldı = true; 
-                document.getElementById("lobby-money").innerText = `Cüzdan: ${wallet.toLocaleString()} TL`;
-                sezanBox.innerText = "🤖 Sezan AI: BAŞIMÜSTÜNE İMPARATOR! Yol harçlığı olarak 50.000 TL hesabına aktarıldı. Tek seferliktir!";
-                speak("50 bin lira hesaba aktarıldı şef, güle güle harca.");
-            }
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
+:root {
+    --bg-color: #0f172a;
+    --card-bg: #1e293b;
+    --accent-color: #3b82f6;
+    --success-color: #10b981;
+    --error-color: #ef4444;
+    --text-color: #f8fafc;
+}
 
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.card {
+    background: var(--card-bg);
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+}
+
+.hidden { display: none !important; }
+
+.avatar-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin: 1.5rem 0;
+}
+
+.avatar-item {
+    border: 3px solid transparent;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s;
+    position: relative;
+}
+
+.avatar-item img {
+    width: 100%;
+    border-radius: 50%;
+}
+
+.avatar-item.selected {
+    border-color: var(--accent-color);
+    transform: scale(1.1);
+}
+
+.badge {
+    position: absolute;
+    bottom: -5px;
+    right: -5px;
+    background: #e11d48;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 10px;
+}
+
+.avatar-item.owned .badge {
+    background: var(--success-color);
+}
+
+input[type="text"] {
+    width: 80%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #475569;
+    background: #334155;
+    color: white;
+    font-size: 16px;
+}
+
+button {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+button:disabled { background: #475569; cursor: not-allowed; }
+
+.options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.option-btn {
+    background: #334155;
+    text-align: left;
+}
+
+.option-btn:hover { background: #475569; }
+.option-btn.correct { background: var(--success-color); }
+.option-btn.wrong { background: var(--error-color); }
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.player-info { display: flex; align-items: center; gap: 10px; }
+.player-info img { width: 40px; height: 40px; border-radius: 50%; }
+// PREMIUM AVATAR SETLERİ (Normalde paralı ama oyuncuya tamamen BEDAVA)
+const avatarStore = [
+    { id: 'av1', name: 'Cyber Punk', url: 'https://api.dicebear.com/7.x/bottts/svg?seed=cyber', price: '150 TL' },
+    { id: 'av2', name: 'Gamer Cat', url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=cat', price: '200 TL' },
+    { id: 'av3', name: 'Astronaut', url: 'https://api.dicebear.com/7.x/bottts/svg?seed=astro', price: '250 TL' },
+    { id: 'av4', name: 'Pixel Hero', url: 'https://api.dicebear.com/7.x/pixel-art/svg?seed=hero', price: '300 TL' }
+];
+
+// 200 SORULUK DEV HAVUZ ŞABLONU (İstediğin kadar soru ekleyebilirsin)
+const questions = [
+    {
+        id: 1,
+        question: "Türkiye Cumhuriyeti'nin kurucusu kimdir?",
+        options: ["Mustafa Kemal Atatürk", "İsmet İnönü", "Kazım Karabekir", "Fevzi Çakmak"],
+        answer: "Mustafa Kemal Atatürk"
+    },
+    {
+        id: 2,
+        question: "Cumhuriyet kaç yılında ilan edilmiştir?",
+        options: ["1919", "1920", "1923", "1924"],
+        answer: "1923"
+    },
+    {
+        id: 3,
+        question: "İstiklal Marşı'mızın şairi kimdir?",
+        options: ["Ziya Gökalp", "Mehmet Akif Ersoy", "Namık Kemal", "Tevfik Fikret"],
+        answer: "Mehmet Akif Ersoy"
+    }
+    // Buraya 200. soruya kadar aynı yapıda ekleme yapabilirsin...
+];
+
+let selectedAvatar = null;
+let currentQuestionIndex = 0;
+let score = 0;
+
+// DOM Elemanları
+const loginScreen = document.getElementById('login-screen');
+const gameScreen = document.getElementById('game-screen');
+const avatarShop = document.getElementById('avatar-shop');
+const usernameInput = document.getElementById('username-input');
+const startBtn = document.getElementById('start-btn');
+
+// 1. Mağazayı Yükle (Her şey ÜCRETSİZ / SAHİP OLUNDU olarak listelenir)
+function loadAvatarShop() {
+    avatarStore.forEach(avatar => {
+        const div = document.createElement('div');
+        div.classList.add('avatar-item');
+        div.dataset.id = avatar.id;
+        div.innerHTML = `
+            <img src="${avatar.url}" alt="${avatar.name}">
+            <span class="badge">BEDAVA</span>
+        `;
+        
+        div.addEventListener('click', () => {
+            document.querySelectorAll('.avatar-item').forEach(item => item.classList.remove('selected'));
+            div.classList.add('selected');
+            selectedAvatar = avatar.url;
+            checkForm();
+        });
+        
+        avatarShop.appendChild(div);
+    });
+}
+
+function checkForm() {
+    if (usernameInput.value.trim() !== "" && selectedAvatar !== null) {
+        startBtn.disabled = false;
+    } else {
+        startBtn.disabled = true;
+    }
+}
+
+usernameInput.addEventListener('input', checkForm);
+
+// 2. Oyunu Başlat (Lobisiz, Direkt Geçiş)
+startBtn.addEventListener('click', () => {
+    loginScreen.classList.add('hidden');
+    gameScreen.classList.remove('hidden');
+    
+    document.getElementById('current-avatar').src = selectedAvatar;
+    document.getElementById('display-name').innerText = usernameInput.value;
+    
+    showQuestion();
+});
+
+// 3. Soru Gösterme Mantığı
+function showQuestion() {
+    const q = questions[currentQuestionIndex];
+    document.getElementById('question-text').innerText = q.question;
+    
+    const optionsContainer = document.getElementById('options-container');
+    optionsContainer.innerHTML = '';
+    
+    q.options.forEach(option => {
+        const btn = document.createElement('button');
+        btn.classList.add('option-btn');
+        btn.innerText = option;
+        btn.addEventListener('click', () => handleAnswer(btn, option, q.answer));
+        optionsContainer.appendChild(btn);
+    });
+    
+    document.getElementById('next-btn').classList.add('hidden');
+}
+
+// 4. Cevap Kontrolü
+function handleAnswer(selectedBtn, chosenOption, correctOption) {
+    const buttons = document.querySelectorAll('.option-btn');
+    buttons.forEach(btn => btn.disabled = true); // Diğer tıklamaları kilitle
+
+    if (chosenOption === correctOption) {
+        selectedBtn.classList.add('correct');
+        score += 10;
+        document.getElementById('score').innerText = score;
+    } else {
+        selectedBtn.classList.add('wrong');
+        // Doğru olanı da yeşil yak
+        buttons.forEach(btn => {
+            if (btn.innerText === correctOption) btn.classList.add('correct');
+        });
+    }
+
+    document.getElementById('next-btn').classList.remove('hidden');
+}
+
+// 5. Sonraki Soruya Geçiş
+document.getElementById('next-btn').addEventListener('click', () => {
+    currentQuestionIndex++;
+    if (currentQuestionIndex < questions.length) {
+        showQuestion();
+    } else {
+        alert(`Oyun bitti! Toplam Skorun: ${score}`);
+        // İstersen burada başa döndürebilirsin
+    }
+});
+
+// Sayfa açılınca mağazayı kur
+loadAvatarShop();
+        
